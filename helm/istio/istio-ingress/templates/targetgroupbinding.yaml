@@ -1,24 +1,23 @@
-# {{- if .Values.gateways.istio-ingressgateway.targetgroupbinding.http != "" }}
-# apiVersion: elbv2.k8s.aws/v1beta1
-# kind: TargetGroupBinding
-# metadata:
-#   name: {{ $gateway.name }}-http
-#   namespace: {{ .Release.Namespace }}
-# spec:
-#   serviceRef:
-#     name: {{ $gateway.name }}
-#     port: 30080
-#   targetGroupARN: {{ Values.gateways.istio-ingressgateway.targetgroupbinding.http }}
-# ---
-# {{- if .Values.gateways.istio-ingressgateway.targetgroupbinding.http != "" }}
-# apiVersion: elbv2.k8s.aws/v1beta1
-# kind: TargetGroupBinding
-# metadata:
-#   name: {{ $gateway.name }}-https
-#   namespace: {{ .Release.Namespace }}
-# spec:
-#   serviceRef:
-#     name: {{ $gateway.name }}
-#     port: 30443
-#   targetGroupARN: {{ Values.gateways.istio-ingressgateway.targetgroupbinding.https }}
-# {{- end }}  
+{{- if .Values.gateways.istio-ingressgateway.targetgroupbinding.enabled }}
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ $gateway.name }}-http
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceRef:
+    name: {{ $gateway.name }}
+    port: 30080
+  targetGroupARN: {{ Values.gateways.istio-ingressgateway.targetgroupbinding.http }}
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ $gateway.name }}-https
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceRef:
+    name: {{ $gateway.name }}
+    port: 30443
+  targetGroupARN: {{ Values.gateways.istio-ingressgateway.targetgroupbinding.https }}
+{{- end }}  

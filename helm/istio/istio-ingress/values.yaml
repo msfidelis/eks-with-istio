@@ -62,6 +62,7 @@ gateways:
     type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be
 
     targetgroupbinding:
+      enabled: false
       http: ""
       https: ""
 

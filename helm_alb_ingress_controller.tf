@@ -12,13 +12,31 @@ resource "helm_release" "alb_ingress_controller" {
 
     set {
         name            = "serviceAccount.create"
-        value           = false
+        value           = true
     }
 
     set {
         name            = "serviceAccount.name"
-        value           = aws_iam_role.alb_controller.name
+        value           = "aws-load-balancer-controller"
     }
+
+    set {
+        name            = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+        value           = aws_iam_role.alb_controller.arn
+    }
+
+    set {
+        name            = "region"
+        value           = var.aws_region
+    }
+
+
+    set {
+        name            = "vpcId"
+        value           = aws_vpc.cluster_vpc.id
+
+    }
+
 
     depends_on = [
         aws_eks_cluster.eks_cluster

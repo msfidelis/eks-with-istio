@@ -5,7 +5,8 @@ resource "helm_release" "istio_base" {
     namespace           = "istio-system"
     create_namespace    = true
     depends_on = [
-        aws_eks_cluster.eks_cluster
+        aws_eks_cluster.eks_cluster,
+        helm_release.alb_ingress_controller
     ]
 }
 
@@ -58,6 +59,11 @@ resource "helm_release" "istio_ingress" {
     }
 
     set {
+        name    = "gateways.istio-ingressgateway.targetgroupbinding.enabled"
+        value   = true
+    }    
+
+    set {
         name    = "gateways.istio-ingressgateway.targetgroupbinding.http"
         value   = aws_lb_target_group.http.arn
     }    
@@ -69,7 +75,8 @@ resource "helm_release" "istio_ingress" {
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        helm_release.istio_base,
+        helm_release.alb_ingress_controller
     ]
 }
 
