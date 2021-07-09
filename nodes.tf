@@ -27,3 +27,32 @@ resource "aws_eks_node_group" "cluster" {
     }
 
 }
+
+resource "aws_security_group" "cluster_nodes_sg" {
+    name = format("%s-nodes-sg", var.cluster_name)
+    vpc_id = aws_vpc.cluster_vpc.id
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+
+        protocol = "-1"
+        cidr_blocks = [ "0.0.0.0/0" ]
+    }
+
+    tags = {
+        Name = format("%s-nodes-sg", var.cluster_name)
+    }
+
+}
+
+resource "aws_security_group_rule" "nodeport" {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 30000
+    to_port     = 32768
+    description = "nodeport"
+    protocol    = "tcp"
+
+    security_group_id = aws_security_group.cluster_nodes_sg.id
+    type = "ingress"
+}

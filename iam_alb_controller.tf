@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "aws_load_balancer_controller_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:kube-system:aws-node"]
+      values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
     }
 
     principals {
