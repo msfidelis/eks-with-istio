@@ -23,3 +23,18 @@ variable "auto_scale_options" {
     desired = 4
   }
 }
+
+variable "nlb_ingress_internal" {
+  type    = bool
+  default = false
+}
+
+variable "nlb_ingress_type" {
+  type    = string
+  default = "network"
+}
+
+variable "nlb_ingress_enable_termination_protection" {
+  type    = bool
+  default = false
+}

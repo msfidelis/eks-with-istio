@@ -101,3 +101,21 @@ resource "helm_release" "istio_egress" {
         helm_release.istio_base
     ]
 }
+
+
+resource "helm_release" "istio_kiali" {
+    name                = "kiali"
+    chart               = "./helm/istio/istio-kiali"
+    namespace           = "istio-system"
+    create_namespace    = true
+
+    set {
+        name    = "release"
+        value   = timestamp()
+    }
+
+    depends_on = [
+        aws_eks_cluster.eks_cluster,
+        helm_release.istio_base
+    ]
+}

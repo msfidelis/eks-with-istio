@@ -1,7 +1,7 @@
 resource "aws_lb" "ingress" {
     name               = var.cluster_name
-    internal           = false
-    load_balancer_type = "network"
+    internal           = var.nlb_ingress_internal
+    load_balancer_type = var.nlb_ingress_type
 
     subnets            = [
         aws_subnet.private_subnet_1a.id,
@@ -9,7 +9,7 @@ resource "aws_lb" "ingress" {
         aws_subnet.private_subnet_1c.id
     ]
 
-    enable_deletion_protection = false
+    enable_deletion_protection = var.nlb_ingress_enable_termination_protection
 
     tags = {
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
