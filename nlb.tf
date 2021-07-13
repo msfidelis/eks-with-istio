@@ -4,9 +4,9 @@ resource "aws_lb" "ingress" {
     load_balancer_type = var.nlb_ingress_type
 
     subnets            = [
-        aws_subnet.private_subnet_1a.id,
-        aws_subnet.private_subnet_1b.id,
-        aws_subnet.private_subnet_1c.id
+        aws_subnet.public_subnet_1a.id,
+        aws_subnet.public_subnet_1b.id,
+        aws_subnet.public_subnet_1c.id
     ]
 
     enable_deletion_protection          = var.nlb_ingress_enable_termination_protection

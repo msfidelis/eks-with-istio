@@ -23,7 +23,15 @@ resource "aws_eks_node_group" "cluster" {
     }
 
     tags = {
-        "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+        "kubernetes.io/cluster/${var.cluster_name}" = "owned",
+        "k8s.io/cluster-autoscaler/${var.cluster_name}" = "owned",
+        "k8s.io/cluster-autoscaler/enabled" = true
+    }
+
+    lifecycle {
+        ignore_changes = [
+            scaling_config[0].desired_size
+        ]
     }
 
 }

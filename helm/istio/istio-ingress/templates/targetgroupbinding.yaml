@@ -1,0 +1,24 @@
+{{ $gateway := index .Values "gateways" "istio-ingressgateway" }}
+{{- if $gateway.targetgroupbinding.enabled }}
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ $gateway.name }}-http
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceRef:
+    name: {{ $gateway.name }}
+    port: 30080
+  targetGroupARN: {{ $gateway.targetgroupbinding.http }}
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ $gateway.name }}-https
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceRef:
+    name: {{ $gateway.name }}
+    port: 30443
+  targetGroupARN: {{ $gateway.targetgroupbinding.https }}
+{{- end }} 

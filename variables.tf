@@ -20,7 +20,7 @@ variable "auto_scale_options" {
   default = {
     min     = 4
     max     = 10
-    desired = 4
+    desired = 6
   }
 }
 
@@ -42,4 +42,14 @@ variable "nlb_ingress_enable_termination_protection" {
 variable "enable_cross_zone_load_balancing" {
   type    = bool
   default = true
+}
+
+variable "kiali_virtual_service_host" {
+  type    = string 
+  default = "kiali.k8s.raj.ninja"
+}
+
+variable "grafana_kiali_virtual_service_host" {
+  type    = string 
+  default = "grafana.kiali.k8s.raj.ninja"
 }

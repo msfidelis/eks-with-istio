@@ -78,6 +78,11 @@ resource "helm_release" "istio_ingress" {
         helm_release.istio_base,
         helm_release.alb_ingress_controller
     ]
+
+    set {
+        name    = "release"
+        value   = timestamp()
+    }
 }
 
 resource "helm_release" "istio_egress" {
@@ -112,6 +117,16 @@ resource "helm_release" "istio_kiali" {
     set {
         name    = "release"
         value   = timestamp()
+    }
+
+    set {
+        name    = "VirtualService.host"
+        value   = var.kiali_virtual_service_host
+    }
+
+    set {
+        name    = "Grafana.host"
+        value   = var.grafana_kiali_virtual_service_host
     }
 
     depends_on = [

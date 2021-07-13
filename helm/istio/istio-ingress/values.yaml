@@ -77,6 +77,11 @@ gateways:
 
     podAnnotations: {}
     type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be
+    
+    targetgroupbinding:
+        enabled: false
+        http: ""
+        https: ""
 
     ##############
     secretVolumes:
@@ -337,3 +342,5 @@ meshConfig:
     #        sni:               # example: tracer.somedomain
     #        subjectAltNames: []
     # - tracer.somedomain
+
+release: ""
