@@ -1,0 +1,77 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana
+  namespace: istio-system
+  labels:
+    helm.sh/chart: grafana-5.8.10
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+    app.kubernetes.io/version: "7.2.1"
+    app.kubernetes.io/managed-by: Helm
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/data
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      editable: true
+      isDefault: true
+      jsonData:
+        timeInterval: 5s
+      name: Prometheus
+      orgId: 1
+      type: prometheus
+      url: http://prometheus:9090
+  dashboardproviders.yaml: |
+    apiVersion: 1
+    providers:
+    - disableDeletion: false
+      folder: istio
+      name: istio
+      options:
+        path: /var/lib/grafana/dashboards/istio
+      orgId: 1
+      type: file
+    - disableDeletion: false
+      folder: istio
+      name: istio-services
+      options:
+        path: /var/lib/grafana/dashboards/istio-services
+      orgId: 1
+      type: file
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: istio-grafana-dashboards
+  namespace: istio-system
+data:
+  istio-performance-dashboard.json: '{{ .Files.Get "dashboards/istio-performance-dashboard.json" }}'
+  pilot-dashboard.json: '{{ .Files.Get "dashboards/pilot-dashboard.json" }}'
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: istio-services-grafana-dashboards
+  namespace: istio-system
+data:
+  istio-extension-dashboard.json: '{{ .Files.Get "dashboards/istio-extension-dashboard.json" }}'
+  istio-mesh-dashboard.json: '{{ .Files.Get "dashboards/istio-mesh-dashboard.json" }}'
+  istio-service-dashboard.json: '{{ .Files.Get "dashboards/istio-service-dashboard.json" }}'
+  istio-workload-dashboard.json: '{{ .Files.Get "dashboards/istio-workload-dashboard.json" }}'

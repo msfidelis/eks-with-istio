@@ -11,5 +11,5 @@ resource "aws_vpc" "cluster_vpc" {
 
 resource "aws_vpc_ipv4_cidr_block_association" "pods" {
   vpc_id     = aws_vpc.cluster_vpc.id
-  cidr_block = "172.0.0.0/16"
+  cidr_block = "11.0.0.0/16"
 }

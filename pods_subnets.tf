@@ -1,7 +1,7 @@
 resource "aws_subnet" "pods_subnet_1a" {
     vpc_id = aws_vpc.cluster_vpc.id
 
-    cidr_block            = "172.0.16.0/20"
+    cidr_block            = "11.0.0.0/20"
     availability_zone     = format("%sa", var.aws_region)
 
     tags = {
@@ -17,7 +17,7 @@ resource "aws_subnet" "pods_subnet_1a" {
 resource "aws_subnet" "pods_subnet_1b" {
     vpc_id = aws_vpc.cluster_vpc.id
 
-    cidr_block            = "172.0.32.0/20"
+    cidr_block            = "11.0.16.0/20"
     availability_zone     = format("%sb", var.aws_region)
 
     tags = {
@@ -33,7 +33,7 @@ resource "aws_subnet" "pods_subnet_1b" {
 resource "aws_subnet" "pods_subnet_1c" {
     vpc_id = aws_vpc.cluster_vpc.id
 
-    cidr_block            = "172.0.48.0/20"
+    cidr_block            = "11.0.32.0/20"
     availability_zone     = format("%sc", var.aws_region)
 
     tags = {

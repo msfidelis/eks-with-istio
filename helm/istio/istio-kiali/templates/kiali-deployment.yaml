@@ -5,12 +5,12 @@ metadata:
   name: kiali
   namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: kiali-server-1.34.0
+    helm.sh/chart: kiali-server-1.29.0
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali-server
-    version: "v1.34.0"
-    app.kubernetes.io/version: "v1.34.0"
+    version: "v1.29.0"
+    app.kubernetes.io/version: "v1.29.0"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 spec:
@@ -28,12 +28,12 @@ spec:
     metadata:
       name: kiali
       labels:
-        helm.sh/chart: kiali-server-1.34.0
+        helm.sh/chart: kiali-server-1.29.0
         app: kiali
         app.kubernetes.io/name: kiali
         app.kubernetes.io/instance: kiali-server
-        version: "v1.34.0"
-        app.kubernetes.io/version: "v1.34.0"
+        version: "v1.29.0"
+        app.kubernetes.io/version: "v1.29.0"
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: "kiali"
       annotations:
@@ -44,7 +44,7 @@ spec:
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v1.34"
+      - image: "quay.io/kiali/kiali:v1.29"
         imagePullPolicy: Always
         name: kiali
         command:
@@ -102,4 +102,5 @@ spec:
         secret:
           secretName: kiali
           optional: true
+...
 ---

@@ -25,6 +25,23 @@ gateways:
       name: https
       protocol: TCP
 
+    nodeports:
+    - name: status-port
+      nodePort: 30021
+      port: 15021
+      protocol: TCP
+      targetPort: 15021
+    - name: http2
+      nodePort: 30080
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: https
+      nodePort: 30443
+      port: 443
+      protocol: TCP
+      targetPort: 8443    
+
     # Scalability tuning
     # replicaCount: 1
     rollingMaxSurge: 100%
@@ -60,11 +77,6 @@ gateways:
 
     podAnnotations: {}
     type: LoadBalancer #change to NodePort, ClusterIP or LoadBalancer if need be
-
-    targetgroupbinding:
-      enabled: false
-      http: ""
-      https: ""
 
     ##############
     secretVolumes:

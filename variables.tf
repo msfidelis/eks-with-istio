@@ -38,3 +38,8 @@ variable "nlb_ingress_enable_termination_protection" {
   type    = bool
   default = false
 }
+
+variable "enable_cross_zone_load_balancing" {
+  type    = bool
+  default = true
+}

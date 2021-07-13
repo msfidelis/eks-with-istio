@@ -1,0 +1,25 @@
+---
+# Source: grafana/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: istio-system
+  labels:
+    helm.sh/chart: grafana-5.8.10
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+    app.kubernetes.io/version: "7.2.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - name: service
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+
+  selector:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/instance: grafana
+---

@@ -9,9 +9,6 @@ metadata:
     {{- range $key, $val := $gateway.serviceAnnotations }}
     {{ $key }}: {{ $val | quote }}
     {{- end }}
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing    
   labels:
 {{ $gateway.labels | toYaml | indent 4 }}
     release: {{ .Release.Name }}

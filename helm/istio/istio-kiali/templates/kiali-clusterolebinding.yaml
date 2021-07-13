@@ -1,0 +1,25 @@
+---
+# Source: kiali-server/templates/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kiali
+  namespace: {{ .Release.Namespace }}
+  labels:
+    helm.sh/chart: kiali-server-1.29.0
+    app: kiali
+    app.kubernetes.io/name: kiali
+    app.kubernetes.io/instance: kiali-server
+    version: "v1.29.0"
+    app.kubernetes.io/version: "v1.29.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: "kiali"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kiali
+subjects:
+- kind: ServiceAccount
+  name: kiali
+  namespace: {{ .Release.Namespace }}
+---

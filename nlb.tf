@@ -9,8 +9,8 @@ resource "aws_lb" "ingress" {
         aws_subnet.private_subnet_1c.id
     ]
 
-    enable_deletion_protection = var.nlb_ingress_enable_termination_protection
-
+    enable_deletion_protection          = var.nlb_ingress_enable_termination_protection
+    enable_cross_zone_load_balancing    = var.enable_cross_zone_load_balancing
     tags = {
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }

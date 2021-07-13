@@ -1,0 +1,39 @@
+{{ $gateway := index .Values "gateways" "istio-ingressgateway" }}
+{{- if not $gateway.customService }}
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: istio-ingress
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+  labels:
+    app: istio-ingressgateway
+    app.kubernetes.io/managed-by: Helm
+    install.operator.istio.io/owning-resource: unknown
+    istio: ingressgateway
+    istio.io/rev: default
+    operator.istio.io/component: IngressGateways
+    release: istio-ingress
+  name: istio-ingressgateway-nodeport
+  namespace: {{ .Release.Namespace }}
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    {{- range $key, $val := $gateway.nodeports }}
+    -
+      {{- range $pkey, $pval := $val }}
+      {{ $pkey}}: {{ $pval }}
+      {{- end }}
+    {{- end }}
+
+  {{ range $app := $gateway.ingressPorts }}
+    -
+      port: {{ $app.port }}
+      name: {{ $app.name }}
+  {{- end }}
+  selector:
+{{ $gateway.labels | toYaml | indent 4 }}
+  sessionAffinity: None
+  type: NodePort
+---
+{{ end }}  
