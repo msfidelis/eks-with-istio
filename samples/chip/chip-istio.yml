@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    istio-injection: enabled
+  name: chip
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: chip
+  name: chip
+  namespace: chip
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chip
+  template:
+    metadata:
+      annotations:
+        istio-injection: enabled
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"           
+      labels:
+        app: chip
+        name: chip
+        version: v1
+    spec:
+      containers:
+      - image: fidelissauro/chip:v1
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+            path: /liveness
+            port: 8080
+          periodSeconds: 10
+        name: chip
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        startupProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /readiness
+            port: 8080
+          periodSeconds: 10
+      terminationGracePeriodSeconds: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chip
+  namespace: chip
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"    
+  labels:
+    app.kubernetes.io/name: chip
+    app.kubernetes.io/instance: chip 
+spec:
+  ports:
+  - name: web
+    port: 8080
+    protocol: TCP
+  selector:
+    app: chip
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  maxReplicas: 10
+  minReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: chip
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: chip-gateway
+  namespace: chip
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "chip.local.cluster"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  hosts:
+  - "chip.local.cluster"
+  gateways:
+  - chip-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: chip
+        port:
+          number: 8080
+    retries:
+      # Retry Example
+      attempts: 4
+      perTryTimeout: 2s
+      retryOn: gateway-error,connect-failure,refused-stream,5xx

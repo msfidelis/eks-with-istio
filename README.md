@@ -23,7 +23,7 @@
 | Istio Ingress       |         |
 | Istio Egress        |         |
 | Istio Discovery     |         |
-| Cluster Autoscaler  |         |
+| Cluster Autoscaler  | v1.21.0 |
 | Kube State Metrics  |         |
 | Metrics Server (HPA)|         |
 | Prometheus Stack    |         |

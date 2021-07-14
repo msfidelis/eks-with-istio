@@ -6,7 +6,10 @@ data "aws_iam_policy_document" "cluster_autoscaler_role" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:kube-system:cluster-autoscaler"]
+      values   = [
+          "system:serviceaccount:kube-system:cluster-autoscaler",
+          "system:serviceaccount:kube-system:aws-cluster-autoscaler"
+        ]
     }
 
     principals {

@@ -79,10 +79,10 @@ resource "helm_release" "istio_ingress" {
         helm_release.alb_ingress_controller
     ]
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }
 }
 
 resource "helm_release" "istio_egress" {
@@ -114,10 +114,10 @@ resource "helm_release" "istio_kiali" {
     namespace           = "istio-system"
     create_namespace    = true
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }
 
     set {
         name    = "VirtualService.host"
