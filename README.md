@@ -14,6 +14,30 @@
 
 > Terraform example to setup Production Ready Clusters on AWS
 
+# Components / Stack 
+
+| Provider          | Version |
+|---------------------|---------|
+| Terraform           | 0.12+   |
+| Istio Base          |         |
+| Istio Ingress       |         |
+| Istio Egress        |         |
+| Istio Discovery     |         |
+| Cluster Autoscaler  |         |
+| Kube State Metrics  |         |
+| Metrics Server (HPA)|         |
+| Prometheus Stack    |         |
+
+# Providers
+
+| Components          | Version |
+|---------------------|---------|
+| AWS                 | v3.37.0+|
+| Helm                | v2.1.1+ |
+| Kubernetes          | v2.1.0+ |
+| TLS                 | v3.1.0+ | 
+
+
 ### 🏠 [Homepage](/)
 
 ### ✨ [Demo](/)
