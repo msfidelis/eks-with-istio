@@ -6,18 +6,18 @@ resource "kubernetes_config_map" "aws-auth" {
 
   data = {
       mapRoles = <<YAML
-- rolearn: ${aws_iam_role.eks_nodes_roles.name}
+- rolearn: ${aws_iam_role.eks_nodes_roles.arn}
   username: system:node:{{EC2PrivateDNSName}}  
   groups:
     - system:bootstrappers
     - system:nodes
-- rolearn: ${aws_iam_role.eks_nodes_roles.name}
+- rolearn: ${aws_iam_role.eks_nodes_roles.arn}
   username: system:node:{{EC2PrivateDNSName}}  
   groups:
     - system:bootstrappers
     - system:nodes
     - system:nodes-proxier
-- rolearn: ${aws_iam_role.eks_nodes_roles.name}
+- rolearn: ${aws_iam_role.eks_nodes_roles.arn}
   username: system:node:{{EC2PrivateDNSName}}  
   groups:
     - system:bootstrappers
@@ -25,4 +25,8 @@ resource "kubernetes_config_map" "aws-auth" {
     - system:nodes-proxier
 YAML
   }
+
+  depends_on = [
+    aws_eks_cluster.eks_cluster
+  ]
 }

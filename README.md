@@ -24,6 +24,7 @@
 | Istio Egress        |         |
 | Istio Discovery     |         |
 | Cluster Autoscaler  | v1.21.0 |
+| Descheduler         |         |
 | Kube State Metrics  |         |
 | Metrics Server (HPA)|         |
 | Prometheus Stack    |         |

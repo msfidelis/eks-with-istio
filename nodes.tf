@@ -34,6 +34,9 @@ resource "aws_eks_node_group" "cluster" {
         ]
     }
 
+    depends_on = [
+        kubernetes_config_map.aws-auth
+    ]
 }
 
 resource "aws_security_group" "cluster_nodes_sg" {
