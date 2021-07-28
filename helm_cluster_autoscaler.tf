@@ -49,6 +49,7 @@ resource "helm_release" "cluster_autoscaler" {
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        aws_eks_node_group.cluster,
+        kubernetes_config_map.aws-auth
     ]
 }

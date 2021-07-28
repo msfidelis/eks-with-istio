@@ -27,6 +27,10 @@ resource "aws_eks_cluster" "eks_cluster" {
     #     resources   = ["secrets"]
     # }   
 
+    enabled_cluster_log_types = [
+        "api", "audit", "authenticator", "controllerManager", "scheduler"
+    ]
+
     tags = {
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
         "k8s.io/cluster-autoscaler/${var.cluster_name}" = "owned",

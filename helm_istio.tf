@@ -4,8 +4,11 @@ resource "helm_release" "istio_base" {
     chart               = "./helm/istio/base"
     namespace           = "istio-system"
     create_namespace    = true
+
     depends_on = [
         aws_eks_cluster.eks_cluster,
+        aws_eks_node_group.cluster,
+        kubernetes_config_map.aws-auth,
         helm_release.alb_ingress_controller
     ]
 }
@@ -15,9 +18,12 @@ resource "helm_release" "istio_discovery" {
     chart               = "./helm/istio/istio-discovery"
     namespace           = "istio-system"
     create_namespace    = true
+
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        aws_eks_node_group.cluster,
+        helm_release.istio_base,
+        kubernetes_config_map.aws-auth,
     ]
 }
 
@@ -26,9 +32,12 @@ resource "helm_release" "istio_operator" {
     chart               = "./helm/istio/istio-operator"
     namespace           = "istio-system"
     create_namespace    = true
+
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        aws_eks_node_group.cluster,
+        helm_release.istio_base,
+        kubernetes_config_map.aws-auth,
     ]
 }
 
@@ -75,8 +84,9 @@ resource "helm_release" "istio_ingress" {
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
+        aws_eks_node_group.cluster,
         helm_release.istio_base,
-        helm_release.alb_ingress_controller
+        kubernetes_config_map.aws-auth,
     ]
 
     # set {
@@ -103,7 +113,9 @@ resource "helm_release" "istio_egress" {
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        aws_eks_node_group.cluster,
+        helm_release.istio_base,
+        kubernetes_config_map.aws-auth,
     ]
 }
 
@@ -131,6 +143,8 @@ resource "helm_release" "istio_kiali" {
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
-        helm_release.istio_base
+        aws_eks_node_group.cluster,
+        helm_release.istio_base,
+        kubernetes_config_map.aws-auth,
     ]
 }

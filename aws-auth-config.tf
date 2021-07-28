@@ -11,17 +11,6 @@ resource "kubernetes_config_map" "aws-auth" {
   groups:
     - system:bootstrappers
     - system:nodes
-- rolearn: ${aws_iam_role.eks_nodes_roles.arn}
-  username: system:node:{{EC2PrivateDNSName}}  
-  groups:
-    - system:bootstrappers
-    - system:nodes
-    - system:nodes-proxier
-- rolearn: ${aws_iam_role.eks_nodes_roles.arn}
-  username: system:node:{{EC2PrivateDNSName}}  
-  groups:
-    - system:bootstrappers
-    - system:nodes
     - system:nodes-proxier
 YAML
   }
