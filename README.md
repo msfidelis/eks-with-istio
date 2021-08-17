@@ -56,7 +56,7 @@
 | TLS                 | v3.1.0+ | 
 
 
-### 🏠 [Architecture](/)
+### 🏠 [Architecture / Topology](/)
 
 ![topology](/samples/img/Architecture.png)
 
