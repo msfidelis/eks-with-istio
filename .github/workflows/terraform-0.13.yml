@@ -1,4 +1,4 @@
-name: Terraform 13.*
+name: Terraform 0.13.*
 
 on: [push]
 
