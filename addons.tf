@@ -12,6 +12,10 @@ resource "aws_eks_addon" "coredns" {
 
   addon_version     = "v1.8.3-eksbuild.1"
   resolve_conflicts = "OVERWRITE"
+
+  depends_on = [
+    aws_eks_node_group.cluster
+  ]
 }
 
 resource "aws_eks_addon" "kubeproxy" {
