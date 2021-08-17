@@ -12,10 +12,7 @@
   </a>
 </p>
 
-> Terraform example to setup Production Ready Clusters on AWS
-
 ## Terraform Versions Compatibility
-
 <p>
   <a href="/" target="_blank">
     <img alt="Terraform 0.12" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.12.*/badge.svg" />
@@ -33,6 +30,11 @@
     <img alt="Terraform 1.0.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.0.*/badge.svg" />
   </a> 
 </p>
+
+
+### 🏠 [Architecture / Topology](/)
+
+![topology](/samples/img/Architecture.png)
 
 # Components / Stack 
 
@@ -58,8 +60,6 @@
 | Kubernetes          | v2.1.0+ |
 | TLS                 | v3.1.0+ | 
 
-
-### 🏠 [Homepage](/)
 
 ### ✨ [Demo](/)
 
