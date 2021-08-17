@@ -31,6 +31,11 @@
   </a> 
 </p>
 
+
+### 🏠 [Architecture / Topology](/)
+
+![topology](/samples/img/Architecture.png)
+
 # Components / Stack 
 
 | Provider          | Version |
@@ -55,10 +60,6 @@
 | Kubernetes          | v2.1.0+ |
 | TLS                 | v3.1.0+ | 
 
-
-### 🏠 [Architecture / Topology](/)
-
-![topology](/samples/img/Architecture.png)
 
 ### ✨ [Demo](/)
 
