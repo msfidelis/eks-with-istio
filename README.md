@@ -12,6 +12,8 @@
   </a>
 </p>
 
+## Terraform Versions
+
 <p>
   <a href="/" target="_blank">
     <img alt="Terraform 0.12" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.12.*/badge.svg" />
@@ -57,7 +59,9 @@
 | TLS                 | v3.1.0+ | 
 
 
-### 🏠 [Homepage](/)
+### 🏠 [Architecture](/)
+
+![topology](/samples/img/Architecture.png)
 
 ### ✨ [Demo](/)
 
