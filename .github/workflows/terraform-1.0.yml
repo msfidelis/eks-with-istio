@@ -1,0 +1,18 @@
+name: Terraform 1.0.*
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Docker version
+      run: docker version
+
+    - name: Terraform 1.0.0 compatibility
+      run: |
+        docker run -t --rm -v $(pwd):/app/ -w /app/ hashicorp/terraform:1.0.0 init
+        docker run -t --rm -v $(pwd):/app/ -w /app/ hashicorp/terraform:1.0.0 validate

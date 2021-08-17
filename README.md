@@ -14,6 +14,26 @@
 
 > Terraform example to setup Production Ready Clusters on AWS
 
+## Terraform Versions Compatibility
+
+<p>
+  <a href="/" target="_blank">
+    <img alt="Terraform 0.12" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.12.*/badge.svg" />
+  </a>
+  <a href="/" target="_blank">
+    <img alt="Terraform 0.13" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.13.*/badge.svg" />
+  </a>
+  <a href="/" target="_blank">
+    <img alt="Terraform 0.14" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.14.*/badge.svg" />
+  </a> 
+  <a href="/" target="_blank">
+    <img alt="Terraform 0.15" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.15.*/badge.svg" />
+  </a>
+  <a href="/" target="_blank">
+    <img alt="Terraform 1.0.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.0.*/badge.svg" />
+  </a> 
+</p>
+
 # Components / Stack 
 
 | Provider          | Version |
