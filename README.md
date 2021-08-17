@@ -26,7 +26,7 @@
     <img alt="Terraform 0.15" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.15.*/badge.svg" />
   </a>
   <a href="/" target="_blank">
-    <img alt="Terraform 1.0.0" src="github.com/msfidelis/eks-with-istio/workflows/Terraform%201.0.*/badge.svg" />
+    <img alt="Terraform 1.0.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.0.*/badge.svg" />
   </a> 
 </p>
 
