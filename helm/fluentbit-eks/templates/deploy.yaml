@@ -1,0 +1,155 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluent-bit
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    eks.amazonaws.com/role-arn: {{ .Values.serviceaccount.eks_role }}
+    app.kubernetes.io/managed-by: Helm
+  labels: 
+    app.kubernetes.io/managed-by: Helm
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: pod-log-reader
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    app.kubernetes.io/managed-by: Helm
+  labels:
+    app.kubernetes.io/managed-by: Helm
+rules:
+- apiGroups: [""]
+  resources:
+  - namespaces
+  - pods
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-log-crb
+  namespace: {{ .Release.Namespace }}
+  annotations: 
+    app.kubernetes.io/managed-by: Helm
+  labels: 
+    app.kubernetes.io/managed-by: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-log-reader
+subjects:
+- kind: ServiceAccount
+  name: fluent-bit
+  namespace: fluentd
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentbit
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: fluentbit
+    app.kubernetes.io/managed-by: Helm
+  annotations: 
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      name: fluentbit
+  template:
+    metadata:
+      labels:
+        name: fluentbit
+    spec:
+      serviceAccountName: fluent-bit
+      containers:
+      - name: aws-for-fluent-bit
+        image: {{ .Values.fluentbit.image }}
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: fluent-bit-config
+          mountPath: /fluent-bit/etc/
+        - name: mnt
+          mountPath: /mnt
+          readOnly: true
+        resources:
+          limits:
+            memory: {{ .Values.fluentbit.resources.limits.memory }}
+            cpu: {{ .Values.fluentbit.resources.limits.cpu }}
+          requests:
+            cpu: {{ .Values.fluentbit.resources.requests.cpu }}
+            memory: {{ .Values.fluentbit.resources.requests.memory }}
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      - name: fluent-bit-config
+        configMap:
+          name: fluent-bit-config
+      - name: mnt
+        hostPath:
+          path: /mnt
+---
+apiVersion: v1
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Parsers_File  parsers.conf
+        Streams_File  streams.conf
+        Log_Level     info
+    [INPUT]
+        Name              tail
+        Tag               order
+        Path              /var/log/containers/*.log
+        Parser            docker
+        DB                /var/log/flb_kube.db
+        Mem_Buf_Limit     256MB
+        DB.locking true
+        Rotate_Wait 30
+        Docker_Mode On
+        Docker_Mode_Flush 10
+        Skip_Long_Lines   On
+        Refresh_Interval  10
+    [FILTER]
+        Name parser
+        Match order
+        Parser dummy
+        Key_Name log
+        Reserve_Data True
+    [OUTPUT]
+        Name s3
+        Match {{ .Values.s3.match }}
+        bucket {{ .Values.s3.bucket_name }}
+        region {{ .Values.s3.region }}
+        store_dir /var/log/fluentbit
+        total_file_size {{ .Values.s3.total_file_size }}
+        upload_timeout {{ .Values.s3.upload_timeout }}
+  parsers.conf: |
+    [PARSER]
+        Name   dummy
+        Format json
+    [PARSER]
+        Name   docker
+        Format json
+  streams.conf: |
+    [STREAM_TASK]
+        Name    state_filter
+        Exec    CREATE STREAM CA_SALES WITH (tag='states.ca') AS SELECT * FROM TAG:'order*' WHERE state = 'CA';
+    [STREAM_TASK]
+        Name    state_filter_notca
+        Exec    CREATE STREAM NOTCA_SALES WITH (tag='states.notca') AS SELECT * FROM TAG:'order*' WHERE state <> 'CA';
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: fluentbit
+    app.kubernetes.io/managed-by: Helm
+  name: fluent-bit-config
+  namespace: {{ .Release.Namespace }}
