@@ -19,6 +19,16 @@ resource "helm_release" "istio_discovery" {
     namespace           = "istio-system"
     create_namespace    = true
 
+    set {
+        name    = "global.hub"
+        value   = "gcr.io/istio-release"
+    }
+
+    set {
+        name    = "global.tag"
+        value   = "1.11.0"
+    }      
+
     depends_on = [
         aws_eks_cluster.eks_cluster,
         aws_eks_node_group.cluster,
@@ -48,6 +58,16 @@ resource "helm_release" "istio_ingress" {
     create_namespace    = true
 
     set {
+        name    = "global.hub"
+        value   = "gcr.io/istio-release"
+    }
+
+    set {
+        name    = "global.tag"
+        value   = "1.11.0"
+    }    
+
+    set {
         name    = "gateways.istio-ingressgateway.autoscaleMin"
         value   = 2
     }
@@ -65,6 +85,11 @@ resource "helm_release" "istio_ingress" {
     set {
         name    = "gateways.istio-ingressgateway.type"
         value   = "NodePort"
+    }
+
+    set {
+        name    = "meshConfig.enablePrometheusMerge"
+        value   = true
     }
 
     set {
@@ -89,10 +114,10 @@ resource "helm_release" "istio_ingress" {
         kubernetes_config_map.aws-auth,
     ]
 
-    # set {
-    #     name    = "release"
-    #     value   = timestamp()
-    # }
+    set {
+        name    = "release"
+        value   = timestamp()
+    }
 }
 
 resource "helm_release" "istio_egress" {
@@ -100,6 +125,16 @@ resource "helm_release" "istio_egress" {
     chart               = "./helm/istio/istio-egress"
     namespace           = "istio-system"
     create_namespace    = true
+
+    set {
+        name    = "global.hub"
+        value   = "gcr.io/istio-release"
+    }
+
+    set {
+        name    = "global.tag"
+        value   = "1.11.0"
+    }    
 
     set {
         name    = "gateways.istio-egressgateway.autoscaleMin"
@@ -110,6 +145,11 @@ resource "helm_release" "istio_egress" {
         name    = "gateways.istio-egressgateway.autoscaleMax"
         value   = 6
     }
+
+    set {
+        name    = "release"
+        value   = timestamp()
+    }    
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
@@ -126,10 +166,10 @@ resource "helm_release" "istio_kiali" {
     namespace           = "istio-system"
     create_namespace    = true
 
-    # set {
-    #     name    = "release"
-    #     value   = timestamp()
-    # }
+    set {
+        name    = "release"
+        value   = timestamp()
+    }
 
     set {
         name    = "VirtualService.host"
