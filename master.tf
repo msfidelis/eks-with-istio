@@ -20,12 +20,12 @@ resource "aws_eks_cluster" "eks_cluster" {
 
     }
 
-    # encryption_config {
-    #     provider {
-    #         key_arn     = aws_kms_key.eks.arn
-    #     }
-    #     resources   = ["secrets"]
-    # }   
+    encryption_config {
+        provider {
+            key_arn     = aws_kms_key.eks.arn
+        }
+        resources   = ["secrets"]
+    }   
 
     enabled_cluster_log_types = [
         "api", "audit", "authenticator", "controllerManager", "scheduler"
