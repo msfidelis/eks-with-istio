@@ -11,23 +11,26 @@ resource "aws_lb" "ingress" {
 
     enable_deletion_protection          = var.nlb_ingress_enable_termination_protection
     enable_cross_zone_load_balancing    = var.enable_cross_zone_load_balancing
+    
     tags = {
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
 }
 
 resource "aws_lb_target_group" "http" {
-  name     = format("%s-http", var.cluster_name)
-  port     = 30080
-  protocol = "TCP"
-  vpc_id   = aws_vpc.cluster_vpc.id
+    name                = format("%s-http", var.cluster_name)
+    port                = 30080
+    protocol            = "TCP"
+    vpc_id              = aws_vpc.cluster_vpc.id
+    proxy_protocol_v2   = var.proxy_protocol_v2
 }
 
 resource "aws_lb_target_group" "https" {
-  name     = format("%s-https", var.cluster_name)
-  port     = 30443
-  protocol = "TCP"
-  vpc_id   = aws_vpc.cluster_vpc.id
+    name                = format("%s-https", var.cluster_name)
+    port                = 30443
+    protocol            = "TCP"
+    vpc_id              = aws_vpc.cluster_vpc.id
+    proxy_protocol_v2   = var.proxy_protocol_v2
 }
 
 resource "aws_lb_listener" "ingress_443" {

@@ -34,6 +34,11 @@ variable "nlb_ingress_type" {
   default = "network"
 }
 
+variable "proxy_protocol_v2" {
+  type    = bool 
+  default = true
+}
+
 variable "nlb_ingress_enable_termination_protection" {
   type    = bool
   default = false
