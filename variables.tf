@@ -36,7 +36,7 @@ variable "nlb_ingress_type" {
 
 variable "proxy_protocol_v2" {
   type    = bool 
-  default = true
+  default = false
 }
 
 variable "nlb_ingress_enable_termination_protection" {
@@ -57,4 +57,12 @@ variable "kiali_virtual_service_host" {
 variable "grafana_kiali_virtual_service_host" {
   type    = string 
   default = "grafana.kiali.k8s.raj.ninja"
+}
+
+variable "default_tags" {
+  default = {
+    Environment = "prod"
+    Foo         = "Bar"
+    Ping        = "Pong"
+  }
 }
