@@ -69,7 +69,7 @@ resource "helm_release" "istio_ingress" {
 
     set {
         name    = "gateways.istio-ingressgateway.autoscaleMin"
-        value   = 2
+        value   = 3
     }
 
     set {
@@ -138,7 +138,7 @@ resource "helm_release" "istio_egress" {
 
     set {
         name    = "gateways.istio-egressgateway.autoscaleMin"
-        value   = 2
+        value   = 3
     }
 
     set {
