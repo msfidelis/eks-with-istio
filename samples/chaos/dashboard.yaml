@@ -1,0 +1,101 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: chaos-dashboard-gateway
+  namespace: chaos-testing
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "chaos-dashboard.k8s.raj.ninja"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: chaos-dashboard
+  namespace: chaos-testing
+spec:
+  hosts:
+  - "chaos-dashboard.k8s.raj.ninja"
+  gateways:
+  - chaos-dashboard-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: chaos-dashboard
+        port:
+          number: 2333
+    retries:
+      attempts: 10
+      perTryTimeout: 2s
+      retryOn: gateway-error,connect-failure,refused-stream,5xx
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  namespace: chaos-testing
+  name: account-chaos-testing-viewer-jdcyq
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: chaos-testing
+  name: role-chaos-testing-viewer-jdcyq
+rules:
+- apiGroups: [""]
+  resources: ["pods", "namespaces"]
+  verbs: ["get", "watch", "list"]
+- apiGroups:
+  - chaos-mesh.org
+  resources: [ "*" ]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-chaos-testing-viewer-jdcyq
+  namespace: chaos-testing
+subjects:
+- kind: ServiceAccount
+  name: account-chaos-testing-viewer-jdcyq
+  namespace: chaos-testing
+roleRef:
+  kind: Role
+  name: role-chaos-testing-viewer-jdcyq
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: role-chaos-testing-viewer-cluster
+rules:
+- apiGroups: [""]
+  resources: ["pods", "namespaces"]
+  verbs: ["get", "watch", "list"]
+- apiGroups:
+  - chaos-mesh.org
+  resources: [ "*" ]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: bind-chaos-testing-viewer-cluster
+  namespace: chaos-testing
+subjects:
+- kind: ServiceAccount
+  name: account-chaos-testing-viewer-jdcyq
+  namespace: chaos-testing
+roleRef:
+  kind: ClusterRole
+  name: role-chaos-testing-viewer-cluster
+  apiGroup: rbac.authorization.k8s.io
