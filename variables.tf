@@ -49,6 +49,11 @@ variable "enable_cross_zone_load_balancing" {
   default = true
 }
 
+variable "cluster_private_zone" {
+  type    = string
+  default = "k8s.cluster"
+}
+
 variable "kiali_virtual_service_host" {
   type    = string 
   default = "kiali.k8s.raj.ninja"
