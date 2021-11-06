@@ -161,7 +161,7 @@ spec:
         port:
           number: 8080
     retries:
-      attempts: 20
+      # attempts: 0
       perTryTimeout: 500ms
       retryOn: 5xx,gateway-error,connect-failure,refused-stream
 ---
