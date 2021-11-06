@@ -46,6 +46,7 @@
 | Istio Egress        | 1.11.0  |
 | Istio Discovery     | 1.11.0  |
 | Cluster Autoscaler  | v1.21.0 |
+| Chaos Mesh          |         |
 | Descheduler         |         |
 | Kube State Metrics  |         |
 | Metrics Server (HPA)|         |
