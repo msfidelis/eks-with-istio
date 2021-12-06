@@ -56,3 +56,9 @@ resource "aws_lb_listener" "ingress_80" {
         target_group_arn = aws_lb_target_group.http.arn
     }
 }
+
+resource "aws_api_gateway_vpc_link" "nlb" {
+  name        = var.cluster_name
+  description = var.cluster_name
+  target_arns = [ aws_lb.ingress.arn ]
+}
