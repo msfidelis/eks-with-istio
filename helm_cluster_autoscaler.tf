@@ -5,6 +5,8 @@ resource "helm_release" "cluster_autoscaler" {
     namespace           = "kube-system"
     create_namespace    = true
 
+    count = var.scaling_provider == "cluster-autoscaler" ? 1 : 0
+
     set {
         name    = "release"
         value   = timestamp()

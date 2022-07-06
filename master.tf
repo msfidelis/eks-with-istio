@@ -88,3 +88,9 @@ resource "aws_security_group_rule" "nodeport_master_udp" {
     security_group_id = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
     type = "ingress"
 }
+
+resource "aws_ec2_tag" "karpenter" {
+  resource_id = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
+  key         = "Name"
+  value       = "Hello World"
+}

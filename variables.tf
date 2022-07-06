@@ -20,8 +20,12 @@ variable "auto_scale_options" {
   default = {
     min     = 4
     max     = 10
-    desired = 6
+    desired = 4
   }
+}
+
+variable "scaling_provider" {
+  default = "karpenter"
 }
 
 variable "nlb_ingress_internal" {
