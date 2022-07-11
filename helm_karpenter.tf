@@ -42,9 +42,11 @@ resource "helm_release" "karpenter" {
 
 }
 
-# resource "kubernetes_manifest" "karpenter_provisioner" {
+# resource "kubernetes_manifest" "karpenter" {
 
 #     count = var.scaling_provider == "karpenter" ? 1 : 0
+
+#     computed_fields = ["spec.requirements"]
 
 #     manifest = {
 #         apiVersion = "karpenter.sh/v1alpha5"
@@ -92,4 +94,9 @@ resource "helm_release" "karpenter" {
 
 #         }
 #     }
+
+
+#     depends_on = [
+#       helm_release.karpenter
+#     ]
 # }

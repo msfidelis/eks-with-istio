@@ -36,8 +36,8 @@ spec:
           name: http
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 250m
+            memory: 512m
         startupProbe:
           failureThreshold: 10
           httpGet:

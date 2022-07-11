@@ -6,13 +6,16 @@ spec:
   requirements:
     - key: karpenter.k8s.aws/instance-family
       operator: In
-      values: [c5, m5, r5]  
+      values: [c5, m5]  
     - key: karpenter.sh/capacity-type        
       operator: In
       values: ["spot"]
     - key: karpenter.k8s.aws/instance-size
       operator: In
-      values: [large]      
+      values: [large]
+    - key: "topology.kubernetes.io/zone" 
+      operator: In
+      values: ["us-east-1a", "us-east-1b", "us-east-1c"]      
   limits:
     resources:
       cpu: 100         
@@ -20,7 +23,6 @@ spec:
   providerRef:               
     name: default
   ttlSecondsAfterEmpty: 30
-  ttlSecondsUntilExpired: 2592000
 ---
 apiVersion: karpenter.k8s.aws/v1alpha1
 kind: AWSNodeTemplate
@@ -29,6 +31,6 @@ metadata:
 spec:
   subnetSelector:
     karpenter.sh/discovery: eks-cluster
-  launchTemplate: eks-c0c0ea0b-86d1-b82b-4927-18cb7fa6c0c9
+  launchTemplate: eks-76c0efa5-907a-08ac-f5f1-4476f6f6b1af
   tags:
     InternalAccountingTag: "1234"    
