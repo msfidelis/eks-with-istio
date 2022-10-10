@@ -55,7 +55,7 @@ spec:
           periodSeconds: 10
         env:
         - name: CHAOS_MONKEY_ENABLED
-          value: "true"  
+          value: "false"  
         - name: CHAOS_MONKEY_MODE
           value: "critical" 
         - name: CHAOS_MONKEY_LATENCY
