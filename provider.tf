@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "aws"
-      version = "~> 4.0"
+      version = "~> 3.0"
     }
     helm = {
       source  = "helm"
@@ -14,7 +14,7 @@ terraform {
     }   
     tls = {
       source  = "tls"
-      version = "~> 2.0"
+      version = "~> 3.1.0"
     }      
   }
 }

@@ -1,75 +1,57 @@
 <h1 align="center">Welcome to EKS with Istio Setup with Terraform 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-v0.0.1-blue.svg?cacheSeconds=2592000" />
-  <a href="/" target="_blank">
+  <a href="/" target="\_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="/LICENSE " target="_blank">
+  <a href="/LICENSE " target="\_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-  <a href="https://twitter.com/fidelissauro" target="_blank">
+  <a href="https://twitter.com/fidelissauro" target="\_blank">
     <img alt="Twitter: fidelissauro" src="https://img.shields.io/twitter/follow/fidelissauro.svg?style=social" />
   </a>
 </p>
 
 ## Terraform Versions Compatibility
 <p>
-  <a href="/" target="_blank">
+  <a href="/" target="\_blank">
     <img alt="Terraform 0.13" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.13.*/badge.svg" />
   </a>
-  <a href="/" target="_blank">
+  <a href="/" target="\_blank">
     <img alt="Terraform 0.14" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.14.*/badge.svg" />
-  </a> 
-  <a href="/" target="_blank">
+  </a>
+  <a href="/" target="\_blank">
     <img alt="Terraform 0.15" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%200.15.*/badge.svg" />
   </a>
-  <a href="/" target="_blank">
+  <a href="/" target="\_blank">
     <img alt="Terraform 1.0.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.0.*/badge.svg" />
-  </a> 
-  <a href="/" target="_blank">
+  </a>
+  <a href="/" target="\_blank">
     <img alt="Terraform 1.1.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.1.*/badge.svg" />
   </a>   
 </p>
-
 
 ### 🏠 [Architecture / Topology](/)
 
 ![topology](/samples/img/Architecture.png)
 
-# Components / Stack 
-
-| Provider          | Version |
-|---------------------|---------|
-| Terraform           | 0.12+   |
-| Istio Base          | 1.11.0  |
-| Istio Ingress       | 1.11.0  |
-| Istio Egress        | 1.11.0  |
-| Istio Discovery     | 1.11.0  |
-| Cluster Autoscaler  | v1.21.0 |
-| Chaos Mesh          |         |
-| Descheduler         |         |
-| Kube State Metrics  |         |
-| Metrics Server (HPA)|         |
-| Prometheus Stack    |         |
-
-<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.0 |
-| <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 2.0 |
+| <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 3.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.10.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.5.1 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.10.0 |
-| <a name="provider_tls"></a> [tls](#provider\_tls) | 2.2.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.54.0 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.2.0 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.4.1 |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | 3.1.0 |
 
 ## Modules
 
@@ -181,7 +163,7 @@ No modules.
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | n/a | `map` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
 | <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | n/a | `bool` | `true` | no |
 | <a name="input_grafana_kiali_virtual_service_host"></a> [grafana\_kiali\_virtual\_service\_host](#input\_grafana\_kiali\_virtual\_service\_host) | n/a | `string` | `"grafana.kiali.k8s.raj.ninja"` | no |
-| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | n/a | `string` | `"1.20"` | no |
+| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | n/a | `string` | `"1.22"` | no |
 | <a name="input_kiali_virtual_service_host"></a> [kiali\_virtual\_service\_host](#input\_kiali\_virtual\_service\_host) | n/a | `string` | `"kiali.k8s.raj.ninja"` | no |
 | <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | n/a | `bool` | `false` | no |
 | <a name="input_nlb_ingress_internal"></a> [nlb\_ingress\_internal](#input\_nlb\_ingress\_internal) | n/a | `bool` | `false` | no |
@@ -195,8 +177,6 @@ No modules.
 |------|-------------|
 | <a name="output_cluster_name"></a> [cluster\_name](#output\_cluster\_name) | n/a |
 | <a name="output_istio_ingress_vpclink"></a> [istio\_ingress\_vpclink](#output\_istio\_ingress\_vpclink) | n/a |
-<!-- END_TF_DOCS -->
-
 
 ### ✨ [Demo](/)
 
@@ -209,7 +189,7 @@ terraform apply
 ## Usage
 
 ```sh
-terraform apply 
+terraform apply
 ```
 
 ## Run tests
@@ -229,7 +209,7 @@ terraform plan
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](/issues).
 
 ## Show your support
 
@@ -241,4 +221,4 @@ Copyright © 2021 [Matheus Fidelis](https://github.com/msfidelis).<br />
 This project is [MIT](/LICENSE ) licensed.
 
 ***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+\_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)\_

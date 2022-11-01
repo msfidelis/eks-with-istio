@@ -1,0 +1,8 @@
+# see: https://terraform-docs.io/user-guide/configuration/formatter
+formatter: markdown table
+
+# see: https://terraform-docs.io/user-guide/configuration/header-from
+header-from: docs/header.md
+
+# see: https://terraform-docs.io/user-guide/configuration/footer-from
+footer-from: docs/footer.md
