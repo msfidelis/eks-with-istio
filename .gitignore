@@ -1,3 +1,4 @@
 terraform.tf*
+.terraform.tf*
 .terraform
-.terraform*
+.terraform.lock*
