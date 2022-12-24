@@ -29,6 +29,12 @@
   <a href="/" target="\_blank">
     <img alt="Terraform 1.1.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.1.*/badge.svg" />
   </a>   
+  <a href="/" target="\_blank">
+    <img alt="Terraform 1.2.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.2.*/badge.svg" />
+  </a>   
+  <a href="/" target="\_blank">
+    <img alt="Terraform 1.3.0" src="https://github.com/msfidelis/eks-with-istio/workflows/Terraform%201.3.*/badge.svg" />
+  </a>     
 </p>
 
 ### 🏠 [Architecture / Topology](/)
