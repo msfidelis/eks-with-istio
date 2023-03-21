@@ -5,10 +5,10 @@ resource "helm_release" "cluster_autoscaler" {
     namespace           = "kube-system"
     create_namespace    = true
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }
 
     set {
         name    = "replicaCount"

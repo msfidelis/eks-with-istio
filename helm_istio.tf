@@ -114,10 +114,10 @@ resource "helm_release" "istio_ingress" {
         kubernetes_config_map.aws-auth,
     ]
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }
 }
 
 resource "helm_release" "istio_egress" {
@@ -146,10 +146,10 @@ resource "helm_release" "istio_egress" {
         value   = 6
     }
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }    
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }    
 
     depends_on = [
         aws_eks_cluster.eks_cluster,
@@ -166,10 +166,10 @@ resource "helm_release" "istio_kiali" {
     namespace           = "istio-system"
     create_namespace    = true
 
-    set {
-        name    = "release"
-        value   = timestamp()
-    }
+    # set {
+    #     name    = "release"
+    #     value   = timestamp()
+    # }
 
     set {
         name    = "VirtualService.host"
