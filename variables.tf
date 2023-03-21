@@ -103,7 +103,7 @@ variable "addon_kubeproxy_version" {
 variable "addon_csi_version" {
   type        = string
   description = "CSI Version"
-  default     = "v1.11.4-eksbuild.1"
+  default     = "v1.17.0-eksbuild.1"
 }
 
 variable "default_tags" {
