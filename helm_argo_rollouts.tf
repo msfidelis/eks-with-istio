@@ -1,4 +1,7 @@
 resource "helm_release" "argo_rollouts" {
+
+    count               = var.argo_rollouts_toggle ? 1 : 0
+
     name                = "argo-rollouts"
     chart               = "argo-rollouts"
     repository          = "https://argoproj.github.io/argo-helm" 

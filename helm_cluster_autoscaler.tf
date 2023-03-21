@@ -1,5 +1,8 @@
 resource "helm_release" "cluster_autoscaler" {
 
+    count               = var.cluster_autoscaler_toggle ? 1 : 0
+
+
     name                = "aws-cluster-autoscaler"
     chart               = "./helm/cluster-autoscaler"
     namespace           = "kube-system"
