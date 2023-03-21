@@ -1,5 +1,4 @@
 resource "helm_release" "chaos_mesh" {
-
     count               = var.chaos_mesh_toggle ? 1 : 0
 
     name                = "chaos-mesh"

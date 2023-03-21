@@ -76,6 +76,13 @@ variable "argo_rollouts_toggle" {
   default     = true
 }
 
+variable "keda_toggle" {
+  type        = bool
+  description = "Enable Keda Installation"
+  default     = true
+}
+
+
 variable "cluster_autoscaler_toggle" {
   type        = bool
   description = "Enable Cluster Autoscaler Installation"

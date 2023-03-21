@@ -1,5 +1,4 @@
 resource "helm_release" "descheduler" {
-
     count               = var.descheduler_toggle ? 1 : 0
 
     name                = "descheduler"
