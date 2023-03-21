@@ -64,6 +64,24 @@ variable "grafana_kiali_virtual_service_host" {
   default = "grafana.kiali.k8s.raj.ninja"
 }
 
+variable "chaos_mesh_toggle" {
+  type        = bool
+  description = "Enable Chaos Mesh Installation"
+  default     = true
+}
+
+variable "argo_rollouts_toggle" {
+  type        = bool
+  description = "Enable Argo Rollouts Installation"
+  default     = true
+}
+
+variable "cluster_autoscaler_toggle" {
+  type        = bool
+  description = "Enable Cluster Autoscaler Installation"
+  default     = true
+}
+
 variable "default_tags" {
   default = {
     Environment = "prod"
