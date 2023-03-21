@@ -1,5 +1,4 @@
 resource "helm_release" "cluster_autoscaler" {
-
     count               = var.cluster_autoscaler_toggle ? 1 : 0
 
 
@@ -7,11 +6,6 @@ resource "helm_release" "cluster_autoscaler" {
     chart               = "./helm/cluster-autoscaler"
     namespace           = "kube-system"
     create_namespace    = true
-
-    # set {
-    #     name    = "release"
-    #     value   = timestamp()
-    # }
 
     set {
         name    = "replicaCount"
