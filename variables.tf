@@ -82,6 +82,36 @@ variable "cluster_autoscaler_toggle" {
   default     = true
 }
 
+variable "descheduler_toggle" {
+  type        = bool
+  description = "Enable Descheduler Installation"
+  default     = false
+}
+
+variable "addon_cni_version" {
+  type        = string
+  description = "VPC CNI Version"
+  default     = "v1.12.6-eksbuild.1"
+}
+
+variable "addon_coredns_version" {
+  type        = string
+  description = "CoreDNS Version"
+  default     = "v1.8.7-eksbuild.4"
+}
+
+variable "addon_kubeproxy_version" {
+  type        = string
+  description = "Kubeproxy Version"
+  default     = "v1.22.17-eksbuild.2"
+}
+
+variable "addon_csi_version" {
+  type        = string
+  description = "CSI Version"
+  default     = "v1.17.0-eksbuild.1"
+}
+
 variable "default_tags" {
   default = {
     Environment = "prod"
