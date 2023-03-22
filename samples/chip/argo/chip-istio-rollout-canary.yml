@@ -99,9 +99,9 @@ spec:
         port:
           number: 8080
     retries:
-      # attempts: 0
+      attempts: 0
       perTryTimeout: 500ms
-      retryOn: 5xx,gateway-error,connect-failure,refused-stream
+      retryOn: refused-stream
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -118,9 +118,9 @@ spec:
         port:
           number: 8080
     retries:
-      attempts: 20
+      attempts: 0
       perTryTimeout: 500ms
-      retryOn: 5xx,gateway-error,connect-failure,refused-stream
+      retryOn: refused-stream
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -182,9 +182,9 @@ spec:
           periodSeconds: 10
         env:
         - name: CHAOS_MONKEY_ENABLED
-          value: "false"  
+          value: "true"  
         - name: CHAOS_MONKEY_MODE
-          value: "critical" 
+          value: "hell" 
         - name: CHAOS_MONKEY_LATENCY
           value: "true"            
         - name: CHAOS_MONKEY_EXCEPTION
@@ -194,5 +194,5 @@ spec:
         - name: CHAOS_MONKEY_MEMORY
           value: "true"
         - name: VERSION
-          value: "v2"
+          value: "v10"
       terminationGracePeriodSeconds: 60

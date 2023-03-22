@@ -1,15 +1,19 @@
 ---
+# Source: kiali-server/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kiali
-  namespace: {{ .Release.Namespace }}
+  namespace: istio-system
   labels:
-    {{- include "istio-kiali.labels" . | nindent 4 }}
-  {{- with .Values.serviceAccount.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    helm.sh/chart: kiali-server-1.60.0
+    app: kiali
+    app.kubernetes.io/name: kiali
+    app.kubernetes.io/instance: kiali
+    version: "v1.60.0"
+    app.kubernetes.io/version: "v1.60.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: "kiali"
 data:
   config.yaml: |
     auth:
@@ -25,19 +29,24 @@ data:
         node: {}
         pod: {}
         pod_anti: {}
-      custom_dashboards:
-        excludes:
-        - ""
-        includes:
-        - '*'
+      configmap_annotations: {}
+      custom_secrets: []
+      host_aliases: []
       hpa:
         api_version: autoscaling/v2beta2
         spec: {}
+      image_digest: ""
       image_name: quay.io/kiali/kiali
       image_pull_policy: Always
       image_pull_secrets: []
-      image_version: v1.29
+      image_version: v1.60
+      ingress:
+        additional_labels: {}
+        class_name: nginx
+        override_yaml:
+          metadata: {}
       ingress_enabled: false
+      instance_name: kiali
       logger:
         log_format: text
         log_level: info
@@ -45,34 +54,47 @@ data:
         time_field_format: 2006-01-02T15:04:05Z07:00
       namespace: istio-system
       node_selector: {}
-      override_ingress_yaml:
-        metadata: {}
-      pod_annotations:
+      pod_annotations: {}
+      pod_labels:
         sidecar.istio.io/inject: "false"
-      pod_labels: {}
       priority_class_name: ""
       replicas: 1
-      resources: {}
+      resources:
+        limits:
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 64Mi
       secret_name: kiali
+      security_context: {}
       service_annotations: {}
       service_type: ""
       tolerations: []
-      version_label: v1.29.0
+      version_label: v1.60.0
       view_only_mode: false
     external_services:
       custom_dashboards:
         enabled: true
-      grafana: 
-        enabled: false
-        url: http://grafana.istio-system.svc.cluster.local:3000
-      tracing:
-        enabled: true        
+      istio:
+        root_namespace: istio-system
     identity:
       cert_file: ""
       private_key_file: ""
     istio_namespace: istio-system
+    kiali_feature_flags:
+      certificates_information_indicators:
+        enabled: true
+        secrets:
+        - cacerts
+        - istio-ca-secret
+      clustering:
+        enabled: true
+      disabled_features: []
+      validations:
+        ignore:
+        - KIA1201
     login_token:
-      signing_key: CHANGEME
+      signing_key: CHANGEME00000000
     server:
       metrics_enabled: true
       metrics_port: 9090

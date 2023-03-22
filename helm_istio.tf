@@ -166,10 +166,10 @@ resource "helm_release" "istio_kiali" {
     namespace           = "istio-system"
     create_namespace    = true
 
-    # set {
-    #     name    = "release"
-    #     value   = timestamp()
-    # }
+    set {
+        name    = "release"
+        value   = 1
+    }
 
     set {
         name    = "VirtualService.host"

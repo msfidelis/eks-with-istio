@@ -7,6 +7,11 @@ resource "helm_release" "argo_rollouts" {
     namespace           = "argo-rollouts"
     create_namespace    = true
 
+    set {
+        name = "dashboard.enabled"
+        value = true
+    }
+
     depends_on = [
         aws_eks_cluster.eks_cluster,
         aws_eks_node_group.cluster,
