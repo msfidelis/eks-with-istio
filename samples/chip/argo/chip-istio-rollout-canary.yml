@@ -1,72 +1,10 @@
+---
 apiVersion: v1
 kind: Namespace
 metadata:
   labels:
     istio-injection: enabled
   name: chip
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: chip
-  name: chip
-  namespace: chip
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: chip
-  template:
-    metadata:
-      annotations:
-        istio-injection: enabled
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"           
-      labels:
-        app: chip
-        name: chip
-        version: v1
-    spec:
-      containers:
-      - name: chip
-        image: fidelissauro/chip:v1
-        ports:
-        - containerPort: 8080
-          name: http
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-        startupProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /readiness
-            port: 8080
-          periodSeconds: 10
-        livenessProbe:
-          failureThreshold: 10
-          httpGet:
-            httpHeaders:
-            - name: Custom-Header
-              value: Awesome
-            path: /liveness
-            port: 8080
-          periodSeconds: 10
-        env:
-        - name: CHAOS_MONKEY_ENABLED
-          value: "true"  
-        - name: CHAOS_MONKEY_MODE
-          value: "critical" 
-        - name: CHAOS_MONKEY_LATENCY
-          value: "true"            
-        - name: CHAOS_MONKEY_EXCEPTION
-          value: "true"   
-        - name: CHAOS_MONKEY_APP_KILLER
-          value: "true"   
-        - name: CHAOS_MONKEY_MEMORY
-          value: "true"                                        
-      terminationGracePeriodSeconds: 60
 ---
 apiVersion: v1
 kind: Service
@@ -95,7 +33,7 @@ metadata:
   namespace: chip
 spec:
   maxReplicas: 10
-  minReplicas: 2
+  minReplicas: 10
   metrics:
     - type: Resource
       resource:
@@ -104,8 +42,8 @@ spec:
           type: Utilization
           averageUtilization: 60
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout
+    apiVersion: apps/v1
+    kind: Deployment
     name: chip
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -183,3 +121,78 @@ spec:
       attempts: 20
       perTryTimeout: 500ms
       retryOn: 5xx,gateway-error,connect-failure,refused-stream
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  replicas: 10
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {duration: 30}
+      - setWeight: 40
+      - pause: {duration: 30}
+      - setWeight: 60
+      - pause: {duration: 30}
+      - setWeight: 80
+      - pause: {}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: chip
+  template:
+    metadata:
+      annotations:
+        istio-injection: enabled
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"           
+      labels:
+        app: chip
+        name: chip
+        version: v1
+    spec:
+      containers:
+      - name: chip
+        image: fidelissauro/chip:v2
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        startupProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /readiness
+            port: 8080
+          periodSeconds: 10
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+            path: /liveness
+            port: 8080
+          periodSeconds: 10
+        env:
+        - name: CHAOS_MONKEY_ENABLED
+          value: "false"  
+        - name: CHAOS_MONKEY_MODE
+          value: "critical" 
+        - name: CHAOS_MONKEY_LATENCY
+          value: "true"            
+        - name: CHAOS_MONKEY_EXCEPTION
+          value: "true"   
+        - name: CHAOS_MONKEY_APP_KILLER
+          value: "true"   
+        - name: CHAOS_MONKEY_MEMORY
+          value: "true"
+        - name: VERSION
+          value: "v2"
+      terminationGracePeriodSeconds: 60
