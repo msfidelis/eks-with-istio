@@ -1,17 +1,16 @@
 ---
-# Source: kiali-server/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kiali
-  namespace: istio-system
+  namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: kiali-server-1.60.0
+    helm.sh/chart: kiali-server-1.29.0
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali-server
-    version: "v1.60.0"
-    app.kubernetes.io/version: "v1.60.0"
+    version: "v1.29.0"
+    app.kubernetes.io/version: "v1.29.0"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 spec:
@@ -29,38 +28,29 @@ spec:
     metadata:
       name: kiali
       labels:
-        helm.sh/chart: kiali-server-1.60.0
+        helm.sh/chart: kiali-server-1.29.0
         app: kiali
         app.kubernetes.io/name: kiali
         app.kubernetes.io/instance: kiali-server
-        version: "v1.60.0"
-        app.kubernetes.io/version: "v1.60.0"
+        version: "v1.29.0"
+        app.kubernetes.io/version: "v1.29.0"
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: "kiali"
-        sidecar.istio.io/inject: "false"
       annotations:
-        checksum/config: ba7d5f42aefa84b2190d799cce4ce0796a3190e41770608c9bf6b4740cf5b892
         prometheus.io/scrape: "true"
         prometheus.io/port: "9090"
-        kiali.io/dashboards: go,kiali
+        kiali.io/runtimes: go,kiali
+        sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v1.60"
+      - image: "quay.io/kiali/kiali:v1.29"
         imagePullPolicy: Always
         name: kiali
         command:
         - "/opt/kiali/kiali"
         - "-config"
         - "/kiali-configuration/config.yaml"
-        securityContext:
-          allowPrivilegeEscalation: false
-          privileged: false
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          capabilities:
-            drop:
-            - ALL
         ports:
         - name: api-port
           containerPort: 20001
@@ -90,7 +80,7 @@ spec:
         - name: LOG_FORMAT
           value: "text"
         - name: LOG_TIME_FIELD_FORMAT
-          value: "2006-01-02T15:04:05Z07:00"
+          value: "2006-01-02T15:04:05Z07:00" 
         - name: LOG_SAMPLER_RATE
           value: "1"
         volumeMounts:
@@ -100,14 +90,6 @@ spec:
           mountPath: "/kiali-cert"
         - name: kiali-secret
           mountPath: "/kiali-secret"
-        - name: kiali-cabundle
-          mountPath: "/kiali-cabundle"
-        resources:
-          limits:
-            memory: 1Gi
-          requests:
-            cpu: 10m
-            memory: 64Mi
       volumes:
       - name: kiali-configuration
         configMap:
@@ -120,8 +102,5 @@ spec:
         secret:
           secretName: kiali
           optional: true
-      - name: kiali-cabundle
-        configMap:
-          name: kiali-cabundle
-          optional: true
 ...
+---

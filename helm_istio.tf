@@ -168,7 +168,7 @@ resource "helm_release" "istio_kiali" {
 
     set {
         name    = "release"
-        value   = 1
+        value   = 3
     }
 
     set {
