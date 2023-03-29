@@ -13,9 +13,15 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 16686
+    # Note: Change port name if you add '--query.grpc.tls.enabled=true'
+    - name: grpc-query
+      port: 16685
+      protocol: TCP
+      targetPort: 16685
   selector:
     app: jaeger
 ---
+# Jaeger implements the Zipkin API. To support swapping out the tracing backend, we use a Service named Zipkin.
 apiVersion: v1
 kind: Service
 metadata:
@@ -49,5 +55,8 @@ spec:
     port: 14250
     targetPort: 14250
     protocol: TCP
+  - port: 9411
+    targetPort: 9411
+    name: http-zipkin
   selector:
     app: jaeger

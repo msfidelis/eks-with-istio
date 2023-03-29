@@ -104,8 +104,8 @@ spec:
           type: Utilization
           averageUtilization: 60
   scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
     name: chip
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -138,7 +138,6 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "chip"
     - "chip.k8s.raj.ninja"
     - "chip.chip.svc.cluster.local"
 ---
@@ -151,7 +150,6 @@ spec:
   hosts:
   - "chip.chip.svc.cluster.local"
   - "chip.k8s.raj.ninja"
-  - "chip"
   gateways:
   - chip-gateway
   http:
@@ -161,25 +159,6 @@ spec:
         port:
           number: 8080
     retries:
-      # attempts: 0
-      perTryTimeout: 500ms
-      retryOn: 5xx,gateway-error,connect-failure,refused-stream
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: chip-internal
-  namespace: chip
-spec:
-  hosts:
-  - "chip.chip.svc.cluster.local"
-  http:
-  - route:
-    - destination:
-        host: chip
-        port:
-          number: 8080
-    retries:
-      attempts: 20
+      attempts: 1
       perTryTimeout: 500ms
       retryOn: 5xx,gateway-error,connect-failure,refused-stream

@@ -1,0 +1,39 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: argo-dashboard
+  namespace: argo-rollouts
+spec:
+  selector:
+    istio: ingressgateway 
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "argo-rollouts-dashboard"
+    - "dashboard-argo.k8s.raj.ninja"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: argo-dashboard
+  namespace: argo-rollouts
+spec:
+  hosts:
+  -  "argo-rollouts-dashboard"
+  -  "dashboard-argo.k8s.raj.ninja"
+  gateways:
+  - argo-dashboard
+  http:
+  - route:
+    - destination:
+        host: argo-rollouts-dashboard
+        port:
+          number: 3100
+    retries:
+      perTryTimeout: 500ms
+      retryOn: 5xx,gateway-error,connect-failure,refused-stream
+---

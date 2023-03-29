@@ -1,0 +1,198 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    istio-injection: enabled
+  name: chip
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chip
+  namespace: chip
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"    
+  labels:
+    app.kubernetes.io/name: chip
+    app.kubernetes.io/instance: chip 
+spec:
+  ports:
+  - name: web
+    port: 8080
+    protocol: TCP
+  selector:
+    app: chip
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  maxReplicas: 10
+  minReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: chip
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  host: chip
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    trafficPolicy:
+      connectionPool:
+        tcp:
+          maxConnections: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: chip-gateway
+  namespace: chip
+spec:
+  selector:
+    istio: ingressgateway 
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "chip"
+    - "chip.k8s.raj.ninja"
+    - "chip.chip.svc.cluster.local"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: chip-gateway
+  namespace: chip
+spec:
+  hosts:
+  - "chip.chip.svc.cluster.local"
+  - "chip.k8s.raj.ninja"
+  - "chip"
+  gateways:
+  - chip-gateway
+  http:
+  - route:
+    - destination:
+        host: chip
+        port:
+          number: 8080
+    retries:
+      attempts: 0
+      perTryTimeout: 500ms
+      retryOn: refused-stream
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: chip-internal
+  namespace: chip
+spec:
+  hosts:
+  - "chip.chip.svc.cluster.local"
+  http:
+  - route:
+    - destination:
+        host: chip
+        port:
+          number: 8080
+    retries:
+      attempts: 0
+      perTryTimeout: 500ms
+      retryOn: refused-stream
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: chip
+  namespace: chip
+spec:
+  replicas: 10
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {duration: 30}
+      - setWeight: 40
+      - pause: {duration: 30}
+      - setWeight: 60
+      - pause: {duration: 30}
+      - setWeight: 80
+      - pause: {}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: chip
+  template:
+    metadata:
+      annotations:
+        istio-injection: enabled
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"           
+      labels:
+        app: chip
+        name: chip
+        version: v1
+    spec:
+      containers:
+      - name: chip
+        image: fidelissauro/chip:v2
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        startupProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /readiness
+            port: 8080
+          periodSeconds: 10
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+            path: /liveness
+            port: 8080
+          periodSeconds: 10
+        env:
+        - name: CHAOS_MONKEY_ENABLED
+          value: "true"  
+        - name: CHAOS_MONKEY_MODE
+          value: "hell" 
+        - name: CHAOS_MONKEY_LATENCY
+          value: "true"            
+        - name: CHAOS_MONKEY_EXCEPTION
+          value: "true"   
+        - name: CHAOS_MONKEY_APP_KILLER
+          value: "true"   
+        - name: CHAOS_MONKEY_MEMORY
+          value: "true"
+        - name: VERSION
+          value: "v10"
+      terminationGracePeriodSeconds: 60
