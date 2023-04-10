@@ -7,7 +7,7 @@ variable "aws_region" {
 }
 
 variable "k8s_version" {
-  default = "1.22"
+  default = "1.24"
 }
 
 variable "nodes_instances_sizes" {
@@ -54,16 +54,6 @@ variable "cluster_private_zone" {
   default = "k8s.cluster"
 }
 
-variable "kiali_virtual_service_host" {
-  type    = string 
-  default = "kiali.k8s.raj.ninja"
-}
-
-variable "grafana_kiali_virtual_service_host" {
-  type    = string 
-  default = "grafana.kiali.k8s.raj.ninja"
-}
-
 variable "chaos_mesh_toggle" {
   type        = bool
   description = "Enable Chaos Mesh Installation"
@@ -80,6 +70,21 @@ variable "keda_toggle" {
   type        = bool
   description = "Enable Keda Installation"
   default     = true
+}
+
+variable "grafana_virtual_service_host" {
+  type    = string
+  default = "grafana.k8s.raj.ninja"
+}
+
+variable "kiali_virtual_service_host" {
+  type    = string
+  default = "kiali.k8s.raj.ninja"
+}
+
+variable "jaeger_virtual_service_host" {
+  type    = string
+  default = "jaeger.k8s.raj.ninja"
 }
 
 

@@ -42,6 +42,7 @@
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.0 |
+| <a name="requirement_kubectl"></a> [kubectl](#requirement\_kubectl) | ~> 1.14 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 3.1.0 |
 
@@ -51,6 +52,7 @@
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 3.76.1 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | 2.9.0 |
+| <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | 1.14.0 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.18.1 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | 3.1.0 |
 
@@ -138,14 +140,22 @@ No modules.
 | [helm_release.cluster_autoscaler](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.descheduler](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.istio_base](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
-| [helm_release.istio_discovery](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
-| [helm_release.istio_egress](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.istio_ingress](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
-| [helm_release.istio_kiali](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
-| [helm_release.istio_operator](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [helm_release.istiod](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [helm_release.jaeger](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.keda](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [helm_release.kiali-server](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.kube_state_metrics](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.metrics_server](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [helm_release.prometheus](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [kubectl_manifest.grafana_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.grafana_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.istio_target_group_binding_http](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.istio_target_group_binding_https](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.jaeger_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.jaeger_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.kiali_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.kiali_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubernetes_config_map.aws-auth](https://registry.terraform.io/providers/kubernetes/latest/docs/resources/config_map) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_eks_cluster_auth.default](https://registry.terraform.io/providers/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
@@ -178,8 +188,9 @@ No modules.
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | n/a | `map` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
 | <a name="input_descheduler_toggle"></a> [descheduler\_toggle](#input\_descheduler\_toggle) | Enable Descheduler Installation | `bool` | `false` | no |
 | <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | n/a | `bool` | `true` | no |
-| <a name="input_grafana_kiali_virtual_service_host"></a> [grafana\_kiali\_virtual\_service\_host](#input\_grafana\_kiali\_virtual\_service\_host) | n/a | `string` | `"grafana.kiali.k8s.raj.ninja"` | no |
-| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | n/a | `string` | `"1.22"` | no |
+| <a name="input_grafana_virtual_service_host"></a> [grafana\_virtual\_service\_host](#input\_grafana\_virtual\_service\_host) | n/a | `string` | `"grafana.k8s.raj.ninja"` | no |
+| <a name="input_jaeger_virtual_service_host"></a> [jaeger\_virtual\_service\_host](#input\_jaeger\_virtual\_service\_host) | n/a | `string` | `"jaeger.k8s.raj.ninja"` | no |
+| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | n/a | `string` | `"1.24"` | no |
 | <a name="input_keda_toggle"></a> [keda\_toggle](#input\_keda\_toggle) | Enable Keda Installation | `bool` | `true` | no |
 | <a name="input_kiali_virtual_service_host"></a> [kiali\_virtual\_service\_host](#input\_kiali\_virtual\_service\_host) | n/a | `string` | `"kiali.k8s.raj.ninja"` | no |
 | <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | n/a | `bool` | `false` | no |
