@@ -17,7 +17,7 @@ resource "helm_release" "istio_base" {
 
 
 resource "helm_release" "istiod" {
-  name             = "istiod"
+  name             = "istio"
   chart            = "istiod"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
@@ -190,7 +190,7 @@ resource "helm_release" "kiali-server" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.60.0"
+  version = "1.67.0"
 
   set {
     name  = "server.web_fqdn"
@@ -209,7 +209,7 @@ resource "helm_release" "kiali-server" {
 
   set {
     name  = "external_services.tracing.in_cluster_url"
-    value = "http://jaeger-query.jaeger.svc.cluster.local:16685/jaeger"
+    value = "http://jaeger-query.jaeger.svc.cluster.local:80"
   }  
 
   set {
@@ -219,7 +219,7 @@ resource "helm_release" "kiali-server" {
 
   set {
     name  = "external_services.prometheus.url"
-    value = "http://prometheus-prometheus.prometheus.svc.cluster.local:9090"
+    value = "http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090"
   }    
 
   set {

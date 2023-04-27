@@ -8,10 +8,15 @@ resource "helm_release" "prometheus" {
 
   version = "45.8.0"
 
-  set {
-    name  = "fullnameOverride"
-    value = "prometheus"
-  }
+  # set {
+  #   name  = "fullnameOverride"
+  #   value = "prometheus"
+  # }
+
+  values = [
+    "${file("./helm/prometheus/values.yml")}"
+  ]
+
 
   depends_on = [
     aws_eks_cluster.eks_cluster,
