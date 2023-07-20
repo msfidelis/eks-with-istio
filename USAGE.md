@@ -69,12 +69,12 @@
 | [aws_route_table_association.public_1a](https://registry.terraform.io/providers/aws/latest/docs/resources/route_table_association) | resource |
 | [aws_route_table_association.public_1b](https://registry.terraform.io/providers/aws/latest/docs/resources/route_table_association) | resource |
 | [aws_route_table_association.public_1c](https://registry.terraform.io/providers/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_security_group.cluster_master_sg](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group.cluster_sg](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.cluster_nodes_sg](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group_rule.cluster_ingress_https](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.nodeport](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.nodeport_master](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
-| [aws_security_group_rule.nodeport_master_udp](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.nodeport_cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.nodeport_cluster_udp](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_subnet.pods_subnet_1a](https://registry.terraform.io/providers/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.pods_subnet_1b](https://registry.terraform.io/providers/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.pods_subnet_1c](https://registry.terraform.io/providers/aws/latest/docs/resources/subnet) | resource |
