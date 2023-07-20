@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "eks_cluster" {
     vpc_config {
 
         security_group_ids = [
-            aws_security_group.cluster_master_sg.id,
+            aws_security_group.cluster_sg.id,
             aws_security_group.cluster_nodes_sg.id
         ]
 
@@ -39,8 +39,8 @@ resource "aws_eks_cluster" "eks_cluster" {
 
 }
 
-resource "aws_security_group" "cluster_master_sg" {
-    name = format("%s-master-sg", var.cluster_name)
+resource "aws_security_group" "cluster_sg" {
+    name = format("%s-sg", var.cluster_name)
     vpc_id = aws_vpc.cluster_vpc.id
 
     egress {
@@ -52,7 +52,7 @@ resource "aws_security_group" "cluster_master_sg" {
     }
 
     tags = {
-        Name = format("%s-master-sg", var.cluster_name)
+        Name = format("%s-sg", var.cluster_name)
     }
 
 }
@@ -63,11 +63,11 @@ resource "aws_security_group_rule" "cluster_ingress_https" {
     to_port     = 443
     protocol    = "tcp"
 
-    security_group_id = aws_security_group.cluster_master_sg.id
+    security_group_id = aws_security_group.cluster_sg.id
     type = "ingress"
 }
 
-resource "aws_security_group_rule" "nodeport_master" {
+resource "aws_security_group_rule" "nodeport_cluster" {
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = 30000
     to_port     = 32768
@@ -78,7 +78,7 @@ resource "aws_security_group_rule" "nodeport_master" {
     type = "ingress"
 }
 
-resource "aws_security_group_rule" "nodeport_master_udp" {
+resource "aws_security_group_rule" "nodeport_cluster_udp" {
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = 30000
     to_port     = 32768
