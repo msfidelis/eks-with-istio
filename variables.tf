@@ -46,7 +46,7 @@ variable "nlb_ingress_enable_termination_protection" {
 
 variable "enable_cross_zone_load_balancing" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "cluster_private_zone" {
