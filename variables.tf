@@ -7,7 +7,7 @@ variable "aws_region" {
 }
 
 variable "k8s_version" {
-  default = "1.24"
+  default = "1.27"
 }
 
 variable "nodes_instances_sizes" {
@@ -109,13 +109,13 @@ variable "addon_cni_version" {
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS Version"
-  default     = "v1.8.7-eksbuild.4"
+  default     = "v1.10.1-eksbuild.2"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "Kubeproxy Version"
-  default     = "v1.22.17-eksbuild.2"
+  default     = "v1.27.3-eksbuild.2"
 }
 
 variable "addon_csi_version" {
