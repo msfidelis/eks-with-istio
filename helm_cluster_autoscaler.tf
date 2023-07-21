@@ -1,9 +1,13 @@
 resource "helm_release" "cluster_autoscaler" {
     count               = var.cluster_autoscaler_toggle ? 1 : 0
 
+    repository          = "https://kubernetes.github.io/autoscaler"
 
+    chart               = "cluster-autoscaler"
     name                = "aws-cluster-autoscaler"
-    chart               = "./helm/cluster-autoscaler"
+
+    version             = "9.29.1"
+
     namespace           = "kube-system"
     create_namespace    = true
 
