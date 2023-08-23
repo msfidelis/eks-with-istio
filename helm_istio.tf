@@ -48,6 +48,16 @@ resource "helm_release" "istio_ingress" {
   }
 
   set {
+    name  = "autoscaling.minReplicas"
+    value = var.istio_ingress_min_pods
+  }
+
+  set {
+    name  = "autoscaling.maxReplicas"
+    value = var.istio_ingress_max_pods
+  }
+
+  set {
     name  = "service.ports[0].name"
     value = "status-port"
   }
@@ -205,32 +215,32 @@ resource "helm_release" "kiali-server" {
   set {
     name  = "external_services.tracing.enabled"
     value = true
-  }  
+  }
 
   set {
     name  = "external_services.tracing.in_cluster_url"
     value = "http://jaeger-query.jaeger.svc.cluster.local:80"
-  }  
+  }
 
   set {
     name  = "external_services.tracing.use_grpc"
     value = false
-  }    
+  }
 
   set {
     name  = "external_services.prometheus.url"
     value = "http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090"
-  }    
+  }
 
   set {
     name  = "external_services.grafana.enabled"
     value = true
-  }   
+  }
 
-   set {
+  set {
     name  = "external_services.grafana.url"
     value = "http://prometheus-grafana.prometheus.svc.cluster.local:80"
-  }    
+  }
 
 
   depends_on = [

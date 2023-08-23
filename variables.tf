@@ -35,7 +35,7 @@ variable "nlb_ingress_type" {
 }
 
 variable "proxy_protocol_v2" {
-  type    = bool 
+  type    = bool
   default = false
 }
 
@@ -57,7 +57,13 @@ variable "cluster_private_zone" {
 variable "chaos_mesh_toggle" {
   type        = bool
   description = "Enable Chaos Mesh Installation"
-  default     = true
+  default     = false
+}
+
+variable "node_termination_handler_toggle" {
+  type        = bool
+  description = "Enable AWS Node Termination Handler Setup"
+  default     = false
 }
 
 variable "argo_rollouts_toggle" {
@@ -87,6 +93,17 @@ variable "jaeger_virtual_service_host" {
   default = "jaeger.k8s.raj.ninja"
 }
 
+variable "istio_ingress_min_pods" {
+  type        = number
+  default     = 3
+  description = "Minimum pods for istio-ingress-gateway"
+}
+
+variable "istio_ingress_max_pods" {
+  type        = number
+  default     = 9
+  description = "Maximum pods for istio-ingress-gateway"
+}
 
 variable "cluster_autoscaler_toggle" {
   type        = bool
