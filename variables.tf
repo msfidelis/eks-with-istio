@@ -141,25 +141,25 @@ variable "keda_toggle" {
 variable "addon_cni_version" {
   type        = string
   description = "VPC CNI Version"
-  default     = "v1.12.6-eksbuild.1"
+  default     = "v1.14.1-eksbuild.1"
 }
 
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS Version"
-  default     = "v1.10.1-eksbuild.2"
+  default     = "v1.10.1-eksbuild.4"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "Kubeproxy Version"
-  default     = "v1.27.3-eksbuild.2"
+  default     = "v1.28.1-eksbuild.1"
 }
 
 variable "addon_csi_version" {
   type        = string
   description = "CSI Version"
-  default     = "v1.17.0-eksbuild.1"
+  default     = "v1.24.0-eksbuild.1"
 }
 
 variable "default_tags" {
