@@ -26,6 +26,37 @@ resource "helm_release" "node_termination_handler" {
     name  = "enableSqsTerminationDraining"
     value = true
   }
+
+  set {
+    name  = "enableSpotInterruptionDraining"
+    value = true
+  }
+
+  set {
+    name  = "enableRebalanceMonitoring"
+    value = true
+  }
+
+  set {
+    name  = "enableRebalanceDraining"
+    value = true
+  }
+
+  set {
+    name  = "enableScheduledEventDraining"
+    value = true
+  }
+
+  set {
+    name  = "deleteSqsMsgIfNodeNotFound"
+    value = true
+  }
+
+    set {
+    name  = "checkTagBeforeDraining"
+    value = false
+  }
+
 }
 
 resource "aws_sqs_queue" "node_termination_handler" {
