@@ -3,9 +3,9 @@ kind: Provisioner
 metadata:
   name: ${EKS_CLUSTER}
 spec:
-  #ttlSecondsAfterEmpty: 30
-  consolidation:
-    enabled: true
+#  consolidation:
+#    enabled: true
+  ttlSecondsAfterEmpty: 30
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: "topology.kubernetes.io/zone"

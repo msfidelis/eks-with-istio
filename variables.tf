@@ -52,7 +52,8 @@ variable "karpenter_instance_family" {
   type = list
   description = "Instance family list to launch on karpenter"
   default = [
-    "m5",
+    "c6",
+    "c6a",
     "c5"
   ]
 }
