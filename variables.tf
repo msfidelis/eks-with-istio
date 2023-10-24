@@ -1,3 +1,7 @@
+#########################
+###  GENERAL CONFIGS  ###
+#########################
+
 variable "cluster_name" {
   default = "eks-cluster"
 }
@@ -7,8 +11,12 @@ variable "aws_region" {
 }
 
 variable "k8s_version" {
-  default = "1.27"
+  default = "1.28"
 }
+
+#########################
+### CAPACITY CONFIGS  ###
+#########################
 
 variable "nodes_instances_sizes" {
   default = [
@@ -23,6 +31,10 @@ variable "auto_scale_options" {
     desired = 6
   }
 }
+
+#########################
+###  INGRESS CONFIGS  ###
+#########################
 
 variable "nlb_ingress_internal" {
   type    = bool
@@ -54,29 +66,12 @@ variable "cluster_private_zone" {
   default = "k8s.cluster"
 }
 
-variable "chaos_mesh_toggle" {
+variable "cluster_autoscaler_toggle" {
   type        = bool
-  description = "Enable Chaos Mesh Installation"
-  default     = false
-}
-
-variable "node_termination_handler_toggle" {
-  type        = bool
-  description = "Enable AWS Node Termination Handler Setup"
-  default     = false
-}
-
-variable "argo_rollouts_toggle" {
-  type        = bool
-  description = "Enable Argo Rollouts Installation"
+  description = "Enable Cluster Autoscaler Installation"
   default     = true
 }
 
-variable "keda_toggle" {
-  type        = bool
-  description = "Enable Keda Installation"
-  default     = true
-}
 
 variable "grafana_virtual_service_host" {
   type    = string
@@ -105,11 +100,9 @@ variable "istio_ingress_max_pods" {
   description = "Maximum pods for istio-ingress-gateway"
 }
 
-variable "cluster_autoscaler_toggle" {
-  type        = bool
-  description = "Enable Cluster Autoscaler Installation"
-  default     = true
-}
+#########################
+###  GENERAL TOGGLES  ###
+#########################
 
 variable "descheduler_toggle" {
   type        = bool
@@ -117,28 +110,56 @@ variable "descheduler_toggle" {
   default     = false
 }
 
+variable "chaos_mesh_toggle" {
+  type        = bool
+  description = "Enable Chaos Mesh Installation"
+  default     = false
+}
+
+variable "node_termination_handler_toggle" {
+  type        = bool
+  description = "Enable AWS Node Termination Handler Setup"
+  default     = false
+}
+
+variable "argo_rollouts_toggle" {
+  type        = bool
+  description = "Enable Argo Rollouts Installation"
+  default     = true
+}
+
+variable "keda_toggle" {
+  type        = bool
+  description = "Enable Keda Installation"
+  default     = true
+}
+
+#########################
+###   ADDONS CONFIGS  ###
+#########################
+
 variable "addon_cni_version" {
   type        = string
   description = "VPC CNI Version"
-  default     = "v1.12.6-eksbuild.1"
+  default     = "v1.14.1-eksbuild.1"
 }
 
 variable "addon_coredns_version" {
   type        = string
   description = "CoreDNS Version"
-  default     = "v1.10.1-eksbuild.2"
+  default     = "v1.10.1-eksbuild.4"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "Kubeproxy Version"
-  default     = "v1.27.3-eksbuild.2"
+  default     = "v1.28.1-eksbuild.1"
 }
 
 variable "addon_csi_version" {
   type        = string
   description = "CSI Version"
-  default     = "v1.17.0-eksbuild.1"
+  default     = "v1.24.0-eksbuild.1"
 }
 
 variable "default_tags" {

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "aws"
-      version = "~> 3.0"
+      version = "~> 4.0"
     }
     helm = {
       source  = "helm"
@@ -24,7 +24,8 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region    = var.aws_region
+  insecure  = true
   default_tags {
     tags = var.default_tags
   }
