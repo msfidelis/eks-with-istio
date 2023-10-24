@@ -37,6 +37,12 @@ resource "aws_eks_node_group" "cluster" {
     depends_on = [
         kubernetes_config_map.aws-auth
     ]
+
+    timeouts {
+        create = "60m"
+        update = "2h"
+        delete = "2h"
+    }
 }
 
 resource "aws_security_group" "cluster_nodes_sg" {

@@ -7,7 +7,7 @@ variable "aws_region" {
 }
 
 variable "k8s_version" {
-  default = "1.27"
+  default = "1.28"
 }
 
 variable "nodes_instances_sizes" {
