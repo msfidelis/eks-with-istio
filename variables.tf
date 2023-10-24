@@ -119,7 +119,7 @@ variable "chaos_mesh_toggle" {
 variable "node_termination_handler_toggle" {
   type        = bool
   description = "Enable AWS Node Termination Handler Setup"
-  default     = false
+  default     = true
 }
 
 variable "argo_rollouts_toggle" {
