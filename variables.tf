@@ -45,7 +45,43 @@ variable "cluster_autoscaler_toggle" {
 variable "karpenter_toggle" {
   type        = bool
   description = "Enable Karpenter Installation"
-  default     = false
+  default     = true
+}
+
+variable "karpenter_instance_family" {
+  type = list
+  description = "Instance family list to launch on karpenter"
+  default = [
+    "m5",
+    "c5"
+  ]
+}
+
+variable "karpenter_instance_sizes" {
+  type = list 
+  description = "Instance sizes to diversify into instance family"
+  default = [
+    "large",
+    "2xlarge"
+  ]
+}
+
+variable "karpenter_capacity_type" {
+  type = list
+  description = "Capacity Type; Ex spot, on_demand"
+  default = [
+    "spot"
+  ]
+}
+
+variable "karpenter_availability_zones" {
+  type = list
+  description = "Availability zones to launch nodes"
+  default = [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c"
+  ]
 }
 
 #########################
