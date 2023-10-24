@@ -32,6 +32,22 @@ variable "auto_scale_options" {
   }
 }
 
+variable "cluster_autoscaler_toggle" {
+  type        = bool
+  description = "Enable Cluster Autoscaler Installation"
+  default     = false
+}
+
+#########################
+### KARPENTER CONFIGS ###
+#########################
+
+variable "karpenter_toggle" {
+  type        = bool
+  description = "Enable Karpenter Installation"
+  default     = false
+}
+
 #########################
 ###  INGRESS CONFIGS  ###
 #########################
@@ -64,12 +80,6 @@ variable "enable_cross_zone_load_balancing" {
 variable "cluster_private_zone" {
   type    = string
   default = "k8s.cluster"
-}
-
-variable "cluster_autoscaler_toggle" {
-  type        = bool
-  description = "Enable Cluster Autoscaler Installation"
-  default     = true
 }
 
 
