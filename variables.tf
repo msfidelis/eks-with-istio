@@ -114,11 +114,35 @@ variable "enable_cross_zone_load_balancing" {
   default = false
 }
 
+#########################
+###  ROUTE53 CONFIGS  ###
+#########################
+
 variable "cluster_private_zone" {
   type    = string
   default = "k8s.cluster"
 }
 
+
+#########################
+###  ISTIO CONFIGS    ###
+#########################
+
+variable "istio_ingress_min_pods" {
+  type        = number
+  default     = 3
+  description = "Minimum pods for istio-ingress-gateway"
+}
+
+variable "istio_ingress_max_pods" {
+  type        = number
+  default     = 9
+  description = "Maximum pods for istio-ingress-gateway"
+}
+
+#########################
+#  PROMETHEUS CONFIGS   #
+#########################
 
 variable "grafana_virtual_service_host" {
   type    = string
@@ -135,17 +159,6 @@ variable "jaeger_virtual_service_host" {
   default = "jaeger.k8s.raj.ninja"
 }
 
-variable "istio_ingress_min_pods" {
-  type        = number
-  default     = 3
-  description = "Minimum pods for istio-ingress-gateway"
-}
-
-variable "istio_ingress_max_pods" {
-  type        = number
-  default     = 9
-  description = "Maximum pods for istio-ingress-gateway"
-}
 
 #########################
 ###  GENERAL TOGGLES  ###
