@@ -248,7 +248,7 @@ No modules.
 ## Install
 
 ```sh
-terraform apply
+terraform init
 ```
 
 ## Usage
