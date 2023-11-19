@@ -1,7 +1,7 @@
 resource "helm_release" "keda" {
     count               = var.keda_toggle ? 1 : 0
 
-    version             = "2.8.0"
+    version             = "2.12.0"
 
     name                = "keda"
     chart               = "keda"
