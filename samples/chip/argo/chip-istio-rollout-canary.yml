@@ -26,26 +26,6 @@ spec:
     app: chip
   type: ClusterIP
 ---
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: chip
-  namespace: chip
-spec:
-  maxReplicas: 10
-  minReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 60
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: chip
----
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -76,7 +56,6 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "chip"
     - "chip.k8s.raj.ninja"
     - "chip.chip.svc.cluster.local"
 ---
@@ -89,7 +68,6 @@ spec:
   hosts:
   - "chip.chip.svc.cluster.local"
   - "chip.k8s.raj.ninja"
-  - "chip"
   gateways:
   - chip-gateway
   http:
@@ -99,7 +77,7 @@ spec:
         port:
           number: 8080
     retries:
-      attempts: 0
+      attempts: 1
       perTryTimeout: 500ms
       retryOn: refused-stream
 ---
@@ -118,7 +96,7 @@ spec:
         port:
           number: 8080
     retries:
-      attempts: 0
+      attempts: 1
       perTryTimeout: 500ms
       retryOn: refused-stream
 ---

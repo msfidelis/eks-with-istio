@@ -12,7 +12,6 @@ resource "helm_release" "argo_rollouts" {
         value = true
     }
 
-
     set {
         name = "controller.metrics.enabled"
         value = true
@@ -39,4 +38,68 @@ resource "helm_release" "argo_rollouts" {
         aws_eks_node_group.cluster,
         kubernetes_config_map.aws-auth
     ]
+}
+
+resource "kubectl_manifest" "rollouts_gateway" {
+  yaml_body = <<YAML
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: argo-gateway
+  namespace: argo-rollouts
+spec:
+  selector:
+    istio: ingressgateway 
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - ${var.argo_rollouts_virtual_service_host}
+YAML
+
+  depends_on = [
+    aws_eks_cluster.eks_cluster,
+    aws_eks_node_group.cluster,
+    kubernetes_config_map.aws-auth,
+    helm_release.istio_base,
+    helm_release.istiod
+  ]
+
+}
+
+
+resource "kubectl_manifest" "rollouts_virtual_service" {
+  yaml_body = <<YAML
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: argo-rollouts
+  namespace: argo-rollouts
+spec:
+  hosts:
+  - ${var.argo_rollouts_virtual_service_host}
+  gateways:
+  - argo-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: argo-rollouts-dashboard
+        port:
+          number: 3100
+YAML
+
+  depends_on = [
+    aws_eks_cluster.eks_cluster,
+    aws_eks_node_group.cluster,
+    kubernetes_config_map.aws-auth,
+    helm_release.istio_base,
+    helm_release.istiod,
+    helm_release.argo_rollouts
+  ]
+
 }
