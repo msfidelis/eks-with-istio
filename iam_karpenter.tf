@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "karpenter_policy" {
 }
 
 resource "aws_iam_policy" "karpenter_policy" {
-  count        = var.karpenter_toggle ? 1 : 0
+  count       = var.karpenter_toggle ? 1 : 0
   name        = format("%s-karpenter", var.cluster_name)
   path        = "/"
   description = var.cluster_name
@@ -82,7 +82,7 @@ resource "aws_iam_policy" "karpenter_policy" {
 
 resource "aws_iam_policy_attachment" "karpenter_policy" {
   count = var.karpenter_toggle ? 1 : 0
-  name = "karpenter"
+  name  = "karpenter"
   roles = [
     aws_iam_role.karpenter_role[count.index].name
   ]

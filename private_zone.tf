@@ -11,5 +11,5 @@ resource "aws_route53_record" "nlb" {
   name    = format("*.%s", var.cluster_private_zone)
   type    = "CNAME"
   ttl     = "30"
-  records = [ aws_lb.ingress.dns_name ]
+  records = [aws_lb.ingress.dns_name]
 }

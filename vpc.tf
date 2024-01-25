@@ -1,12 +1,12 @@
 resource "aws_vpc" "cluster_vpc" {
-    cidr_block = "10.0.0.0/16"
+  cidr_block = "10.0.0.0/16"
 
-    enable_dns_hostnames = true
-    enable_dns_support   = true
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 
-    tags = {
-        Name = format("%s-vpc", var.cluster_name)
-    }
+  tags = {
+    Name = format("%s-vpc", var.cluster_name)
+  }
 }
 
 resource "aws_vpc_ipv4_cidr_block_association" "pods" {

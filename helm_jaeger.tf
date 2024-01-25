@@ -1,18 +1,18 @@
 resource "helm_release" "jaeger" {
-    name                = "jaeger"
-    repository          = "https://jaegertracing.github.io/helm-charts" 
-    chart               = "jaeger"
-    namespace           = "jaeger"
+  name       = "jaeger"
+  repository = "https://jaegertracing.github.io/helm-charts"
+  chart      = "jaeger"
+  namespace  = "jaeger"
 
-    version             = "0.69.1"
+  version = "0.69.1"
 
-    create_namespace    = true
+  create_namespace = true
 
-    depends_on = [
-        aws_eks_cluster.eks_cluster,
-        aws_eks_node_group.cluster,
-        kubernetes_config_map.aws-auth
-    ]
+  depends_on = [
+    aws_eks_cluster.eks_cluster,
+    aws_eks_node_group.cluster,
+    kubernetes_config_map.aws-auth
+  ]
 }
 
 resource "kubectl_manifest" "jaeger_gateway" {

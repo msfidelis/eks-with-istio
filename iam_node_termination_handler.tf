@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "aws_node_termination_handler_policy" {
 }
 
 resource "aws_iam_policy" "aws_node_termination_handler_policy" {
-    count              = var.node_termination_handler_toggle ? 1 : 0
+  count       = var.node_termination_handler_toggle ? 1 : 0
   name        = format("%s-_node_termination_handler", var.cluster_name)
   path        = "/"
   description = var.cluster_name

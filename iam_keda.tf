@@ -6,9 +6,9 @@ data "aws_iam_policy_document" "keda_role" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
-      values   = [
-          "system:serviceaccount:keda:keda-operator"
-        ]
+      values = [
+        "system:serviceaccount:keda:keda-operator"
+      ]
     }
 
     principals {
@@ -25,36 +25,36 @@ resource "aws_iam_role" "keda_role" {
 }
 
 data "aws_iam_policy_document" "keda_policy" {
-    version = "2012-10-17"
+  version = "2012-10-17"
 
-    statement {
+  statement {
 
-        effect  = "Allow"
-        actions = [
-            "sqs:Get*",
-            "sqs:Describe*",
-        ]
+    effect = "Allow"
+    actions = [
+      "sqs:Get*",
+      "sqs:Describe*",
+    ]
 
-        resources = [ 
-          "*"
-        ]
+    resources = [
+      "*"
+    ]
 
-    }
+  }
 }
 
 resource "aws_iam_policy" "keda_policy" {
-    name        = format("%s-keda", var.cluster_name)
-    path        = "/"
-    description = var.cluster_name
+  name        = format("%s-keda", var.cluster_name)
+  path        = "/"
+  description = var.cluster_name
 
-    policy = data.aws_iam_policy_document.keda_policy.json
+  policy = data.aws_iam_policy_document.keda_policy.json
 }
 
 resource "aws_iam_policy_attachment" "keda" {
-    name       = "keda"
-    roles      = [ 
-      aws_iam_role.keda_role.name
-    ]
+  name = "keda"
+  roles = [
+    aws_iam_role.keda_role.name
+  ]
 
-    policy_arn = aws_iam_policy.keda_policy.arn
+  policy_arn = aws_iam_policy.keda_policy.arn
 }

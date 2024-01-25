@@ -49,7 +49,7 @@ variable "karpenter_toggle" {
 }
 
 variable "karpenter_instance_family" {
-  type = list
+  type        = list(any)
   description = "Instance family list to launch on karpenter"
   default = [
     "c6",
@@ -59,7 +59,7 @@ variable "karpenter_instance_family" {
 }
 
 variable "karpenter_instance_sizes" {
-  type = list 
+  type        = list(any)
   description = "Instance sizes to diversify into instance family"
   default = [
     "large",
@@ -68,7 +68,7 @@ variable "karpenter_instance_sizes" {
 }
 
 variable "karpenter_capacity_type" {
-  type = list
+  type        = list(any)
   description = "Capacity Type; Ex spot, on_demand"
   default = [
     "spot"
@@ -76,7 +76,7 @@ variable "karpenter_capacity_type" {
 }
 
 variable "karpenter_availability_zones" {
-  type = list
+  type        = list(any)
   description = "Availability zones to launch nodes"
   default = [
     "us-east-1a",
@@ -164,7 +164,7 @@ variable "jaeger_virtual_service_host" {
 ###############################
 
 variable "argo_rollouts_virtual_service_host" {
-  type = string
+  type    = string
   default = "argo-rollouts.k8s.raj.ninja"
 }
 

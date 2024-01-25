@@ -23,79 +23,79 @@ resource "aws_iam_role" "alb_controller" {
 }
 
 data "aws_iam_policy_document" "aws_load_balancer_controller_policy" {
-    version = "2012-10-17"
+  version = "2012-10-17"
 
-    statement {
+  statement {
 
-        effect  = "Allow"
-        actions = [
-            "iam:CreateServiceLinkedRole",
-            "ec2:DescribeAccountAttributes",
-            "ec2:DescribeAddresses",
-            "ec2:DescribeAvailabilityZones",
-            "ec2:DescribeInternetGateways",
-            "ec2:DescribeVpcs",
-            "ec2:DescribeSubnets",
-            "ec2:DescribeSecurityGroups",
-            "ec2:DescribeInstances",
-            "ec2:DescribeNetworkInterfaces",
-            "ec2:DescribeTags",
-            "ec2:GetCoipPoolUsage",
-            "ec2:DescribeCoipPools",
-            "elasticloadbalancing:DescribeLoadBalancers",
-            "elasticloadbalancing:DescribeLoadBalancerAttributes",
-            "elasticloadbalancing:DescribeListeners",
-            "elasticloadbalancing:DescribeListenerCertificates",
-            "elasticloadbalancing:DescribeSSLPolicies",
-            "elasticloadbalancing:DescribeRules",
-            "elasticloadbalancing:DescribeTargetGroups",
-            "elasticloadbalancing:DescribeTargetGroupAttributes",
-            "elasticloadbalancing:DescribeTargetHealth",
-            "elasticloadbalancing:DescribeTags",
-            "elasticloadbalancing:SetWebAcl",
-            "elasticloadbalancing:ModifyListener",
-            "elasticloadbalancing:AddListenerCertificates",
-            "elasticloadbalancing:RemoveListenerCertificates",
-            "elasticloadbalancing:ModifyRule"            
-        ]
+    effect = "Allow"
+    actions = [
+      "iam:CreateServiceLinkedRole",
+      "ec2:DescribeAccountAttributes",
+      "ec2:DescribeAddresses",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInternetGateways",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeInstances",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeTags",
+      "ec2:GetCoipPoolUsage",
+      "ec2:DescribeCoipPools",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:DescribeLoadBalancerAttributes",
+      "elasticloadbalancing:DescribeListeners",
+      "elasticloadbalancing:DescribeListenerCertificates",
+      "elasticloadbalancing:DescribeSSLPolicies",
+      "elasticloadbalancing:DescribeRules",
+      "elasticloadbalancing:DescribeTargetGroups",
+      "elasticloadbalancing:DescribeTargetGroupAttributes",
+      "elasticloadbalancing:DescribeTargetHealth",
+      "elasticloadbalancing:DescribeTags",
+      "elasticloadbalancing:SetWebAcl",
+      "elasticloadbalancing:ModifyListener",
+      "elasticloadbalancing:AddListenerCertificates",
+      "elasticloadbalancing:RemoveListenerCertificates",
+      "elasticloadbalancing:ModifyRule"
+    ]
 
-        resources = [ 
-          "*"
-        ]
+    resources = [
+      "*"
+    ]
 
-    }
+  }
 
-    statement {
+  statement {
 
-        effect  = "Allow"
-        actions = [
-          "elasticloadbalancing:RegisterTargets",
-          "elasticloadbalancing:DeregisterTargets"        
-        ]
+    effect = "Allow"
+    actions = [
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:DeregisterTargets"
+    ]
 
-        resources = [ 
-          "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
-        ]
-        
-    }
+    resources = [
+      "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+    ]
+
+  }
 
 
-    statement {
+  statement {
 
-        effect  = "Allow"
-        actions = [
-          "elasticloadbalancing:AddTags",
-          "elasticloadbalancing:RemoveTags"   
-        ]
+    effect = "Allow"
+    actions = [
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:RemoveTags"
+    ]
 
-        resources = [ 
-          "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
-          "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
-          "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
-          "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
-        ]
-        
-    }    
+    resources = [
+      "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+      "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+      "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+      "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
+    ]
+
+  }
 
 }
 
@@ -108,9 +108,9 @@ resource "aws_iam_policy" "aws_load_balancer_controller_policy" {
 }
 
 resource "aws_iam_policy_attachment" "aws_load_balancer_controller_policy" {
-  name       = "aws_load_balancer_controller_policy"
+  name = "aws_load_balancer_controller_policy"
 
-  roles      = [aws_iam_role.alb_controller.name]
+  roles = [aws_iam_role.alb_controller.name]
 
   policy_arn = aws_iam_policy.aws_load_balancer_controller_policy.arn
 }
