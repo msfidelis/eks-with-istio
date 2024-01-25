@@ -180,6 +180,8 @@ No modules.
 | [kubectl_manifest.karpenter_template](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.kiali_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.kiali_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.rollouts_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.rollouts_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubernetes_config_map.aws-auth](https://registry.terraform.io/providers/kubernetes/latest/docs/resources/config_map) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_eks_cluster_auth.default](https://registry.terraform.io/providers/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
@@ -203,38 +205,39 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_addon_cni_version"></a> [addon\_cni\_version](#input\_addon\_cni\_version) | VPC CNI Version | `string` | `"v1.14.1-eksbuild.1"` | no |
-| <a name="input_addon_coredns_version"></a> [addon\_coredns\_version](#input\_addon\_coredns\_version) | CoreDNS Version | `string` | `"v1.10.1-eksbuild.4"` | no |
-| <a name="input_addon_csi_version"></a> [addon\_csi\_version](#input\_addon\_csi\_version) | CSI Version | `string` | `"v1.24.0-eksbuild.1"` | no |
-| <a name="input_addon_kubeproxy_version"></a> [addon\_kubeproxy\_version](#input\_addon\_kubeproxy\_version) | Kubeproxy Version | `string` | `"v1.28.1-eksbuild.1"` | no |
-| <a name="input_argo_rollouts_toggle"></a> [argo\_rollouts\_toggle](#input\_argo\_rollouts\_toggle) | Enable Argo Rollouts Installation | `bool` | `true` | no |
-| <a name="input_auto_scale_options"></a> [auto\_scale\_options](#input\_auto\_scale\_options) | n/a | `map` | <pre>{<br>  "desired": 6,<br>  "max": 10,<br>  "min": 4<br>}</pre> | no |
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | `"us-east-1"` | no |
-| <a name="input_chaos_mesh_toggle"></a> [chaos\_mesh\_toggle](#input\_chaos\_mesh\_toggle) | Enable Chaos Mesh Installation | `bool` | `false` | no |
-| <a name="input_cluster_autoscaler_toggle"></a> [cluster\_autoscaler\_toggle](#input\_cluster\_autoscaler\_toggle) | Enable Cluster Autoscaler Installation | `bool` | `false` | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"eks-cluster"` | no |
-| <a name="input_cluster_private_zone"></a> [cluster\_private\_zone](#input\_cluster\_private\_zone) | n/a | `string` | `"k8s.cluster"` | no |
-| <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | n/a | `map` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
-| <a name="input_descheduler_toggle"></a> [descheduler\_toggle](#input\_descheduler\_toggle) | Enable Descheduler Installation | `bool` | `false` | no |
-| <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | n/a | `bool` | `false` | no |
-| <a name="input_grafana_virtual_service_host"></a> [grafana\_virtual\_service\_host](#input\_grafana\_virtual\_service\_host) | n/a | `string` | `"grafana.k8s.raj.ninja"` | no |
-| <a name="input_istio_ingress_max_pods"></a> [istio\_ingress\_max\_pods](#input\_istio\_ingress\_max\_pods) | Maximum pods for istio-ingress-gateway | `number` | `9` | no |
-| <a name="input_istio_ingress_min_pods"></a> [istio\_ingress\_min\_pods](#input\_istio\_ingress\_min\_pods) | Minimum pods for istio-ingress-gateway | `number` | `3` | no |
-| <a name="input_jaeger_virtual_service_host"></a> [jaeger\_virtual\_service\_host](#input\_jaeger\_virtual\_service\_host) | n/a | `string` | `"jaeger.k8s.raj.ninja"` | no |
-| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | n/a | `string` | `"1.28"` | no |
-| <a name="input_karpenter_availability_zones"></a> [karpenter\_availability\_zones](#input\_karpenter\_availability\_zones) | Availability zones to launch nodes | `list` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
-| <a name="input_karpenter_capacity_type"></a> [karpenter\_capacity\_type](#input\_karpenter\_capacity\_type) | Capacity Type; Ex spot, on\_demand | `list` | <pre>[<br>  "spot"<br>]</pre> | no |
-| <a name="input_karpenter_instance_family"></a> [karpenter\_instance\_family](#input\_karpenter\_instance\_family) | Instance family list to launch on karpenter | `list` | <pre>[<br>  "c6",<br>  "c6a",<br>  "c5"<br>]</pre> | no |
-| <a name="input_karpenter_instance_sizes"></a> [karpenter\_instance\_sizes](#input\_karpenter\_instance\_sizes) | Instance sizes to diversify into instance family | `list` | <pre>[<br>  "large",<br>  "2xlarge"<br>]</pre> | no |
-| <a name="input_karpenter_toggle"></a> [karpenter\_toggle](#input\_karpenter\_toggle) | Enable Karpenter Installation | `bool` | `true` | no |
-| <a name="input_keda_toggle"></a> [keda\_toggle](#input\_keda\_toggle) | Enable Keda Installation | `bool` | `true` | no |
-| <a name="input_kiali_virtual_service_host"></a> [kiali\_virtual\_service\_host](#input\_kiali\_virtual\_service\_host) | n/a | `string` | `"kiali.k8s.raj.ninja"` | no |
-| <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | n/a | `bool` | `false` | no |
-| <a name="input_nlb_ingress_internal"></a> [nlb\_ingress\_internal](#input\_nlb\_ingress\_internal) | n/a | `bool` | `false` | no |
-| <a name="input_nlb_ingress_type"></a> [nlb\_ingress\_type](#input\_nlb\_ingress\_type) | n/a | `string` | `"network"` | no |
-| <a name="input_node_termination_handler_toggle"></a> [node\_termination\_handler\_toggle](#input\_node\_termination\_handler\_toggle) | Enable AWS Node Termination Handler Setup | `bool` | `true` | no |
-| <a name="input_nodes_instances_sizes"></a> [nodes\_instances\_sizes](#input\_nodes\_instances\_sizes) | n/a | `list` | <pre>[<br>  "t3.large"<br>]</pre> | no |
-| <a name="input_proxy_protocol_v2"></a> [proxy\_protocol\_v2](#input\_proxy\_protocol\_v2) | n/a | `bool` | `false` | no |
+| <a name="input_addon_cni_version"></a> [addon\_cni\_version](#input\_addon\_cni\_version) | Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking. | `string` | `"v1.14.1-eksbuild.1"` | no |
+| <a name="input_addon_coredns_version"></a> [addon\_coredns\_version](#input\_addon\_coredns\_version) | Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution. | `string` | `"v1.11.1-eksbuild.4"` | no |
+| <a name="input_addon_csi_version"></a> [addon\_csi\_version](#input\_addon\_csi\_version) | Indicates the version of the Container Storage Interface (CSI) driver to use for managing storage volumes in Kubernetes. | `string` | `"v1.26.1-eksbuild.1"` | no |
+| <a name="input_addon_kubeproxy_version"></a> [addon\_kubeproxy\_version](#input\_addon\_kubeproxy\_version) | Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers. | `string` | `"v1.29.0-eksbuild.1"` | no |
+| <a name="input_argo_rollouts_toggle"></a> [argo\_rollouts\_toggle](#input\_argo\_rollouts\_toggle) | Enables the installation of Argo Rollouts, providing advanced deployment strategies like Canary and Blue-Green deployments in Kubernetes. | `bool` | `true` | no |
+| <a name="input_argo_rollouts_virtual_service_host"></a> [argo\_rollouts\_virtual\_service\_host](#input\_argo\_rollouts\_virtual\_service\_host) | The hostname for the Argo Rollouts virtual service, used for advanced deployment capabilities like canary and blue-green deployments in Kubernetes. | `string` | `"argo-rollouts.k8s.raj.ninja"` | no |
+| <a name="input_auto_scale_options"></a> [auto\_scale\_options](#input\_auto\_scale\_options) | Configuration for the EKS cluster auto-scaling. It includes the minimum (min), maximum (max), and desired (desired) number of worker nodes. | `map` | <pre>{<br>  "desired": 6,<br>  "max": 10,<br>  "min": 4<br>}</pre> | no |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region where the EKS cluster will be deployed. This should be set to the region where you want your Kubernetes resources to reside. | `string` | `"us-east-1"` | no |
+| <a name="input_chaos_mesh_toggle"></a> [chaos\_mesh\_toggle](#input\_chaos\_mesh\_toggle) | Determines whether to install Chaos Mesh, a cloud-native Chaos Engineering platform that orchestrates chaos experiments on Kubernetes environments. | `bool` | `false` | no |
+| <a name="input_cluster_autoscaler_toggle"></a> [cluster\_autoscaler\_toggle](#input\_cluster\_autoscaler\_toggle) | Enable or disable the Cluster Autoscaler installation. When true, Cluster Autoscaler is installed to automatically adjust the number of nodes in the cluster. | `bool` | `false` | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the Amazon EKS cluster. This is a unique identifier for your EKS cluster within the AWS region. | `string` | `"eks-cluster"` | no |
+| <a name="input_cluster_private_zone"></a> [cluster\_private\_zone](#input\_cluster\_private\_zone) | The private DNS zone name for the EKS cluster in AWS Route53. This zone is used for internal DNS resolution within the cluster. | `string` | `"k8s.cluster"` | no |
+| <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | A map of default tags to apply to all resources. These tags can help with identifying and organizing resources within the AWS environment. | `map(string)` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
+| <a name="input_descheduler_toggle"></a> [descheduler\_toggle](#input\_descheduler\_toggle) | Controls the installation of the Descheduler, a tool to balance and optimize the distribution of Pods across the cluster for improved efficiency. | `bool` | `false` | no |
+| <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | Controls whether cross-zone load balancing is enabled for the Network Load Balancer, allowing even traffic distribution across all zones. | `bool` | `false` | no |
+| <a name="input_grafana_virtual_service_host"></a> [grafana\_virtual\_service\_host](#input\_grafana\_virtual\_service\_host) | The hostname for the Grafana virtual service, used in Istio routing. This host is used to access Grafana dashboards for monitoring metrics. | `string` | `"grafana.k8s.raj.ninja"` | no |
+| <a name="input_istio_ingress_max_pods"></a> [istio\_ingress\_max\_pods](#input\_istio\_ingress\_max\_pods) | The maximum number of pods to scale up for the Istio ingress gateway. This limits the resources used and manages the scaling behavior. | `number` | `9` | no |
+| <a name="input_istio_ingress_min_pods"></a> [istio\_ingress\_min\_pods](#input\_istio\_ingress\_min\_pods) | The minimum number of pods to maintain for the Istio ingress gateway. This ensures basic availability and load handling. | `number` | `3` | no |
+| <a name="input_jaeger_virtual_service_host"></a> [jaeger\_virtual\_service\_host](#input\_jaeger\_virtual\_service\_host) | The hostname for the Jaeger virtual service, used for tracing and monitoring microservices within the Istio service mesh. | `string` | `"jaeger.k8s.raj.ninja"` | no |
+| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components. | `string` | `"1.29"` | no |
+| <a name="input_karpenter_availability_zones"></a> [karpenter\_availability\_zones](#input\_karpenter\_availability\_zones) | A list of AWS availability zones where Karpenter should launch nodes. These zones should be in the same region as the EKS cluster. | `list(any)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
+| <a name="input_karpenter_capacity_type"></a> [karpenter\_capacity\_type](#input\_karpenter\_capacity\_type) | Defines the capacity types for provisioning instances in the cluster, such as 'spot' or 'on\_demand', offering cost-saving options or consistent availability respectively. | `list(any)` | <pre>[<br>  "spot"<br>]</pre> | no |
+| <a name="input_karpenter_instance_family"></a> [karpenter\_instance\_family](#input\_karpenter\_instance\_family) | Defines a list of EC2 instance families to be considered by Karpenter for node provisioning. Instance families like 'c6' and 'c5' offer different compute capabilities. | `list(any)` | <pre>[<br>  "c6",<br>  "c6a",<br>  "c5"<br>]</pre> | no |
+| <a name="input_karpenter_instance_sizes"></a> [karpenter\_instance\_sizes](#input\_karpenter\_instance\_sizes) | Specifies a list of instance sizes within the chosen instance families to allow diversity in the provisioned nodes by Karpenter. | `list(any)` | <pre>[<br>  "large",<br>  "2xlarge"<br>]</pre> | no |
+| <a name="input_karpenter_toggle"></a> [karpenter\_toggle](#input\_karpenter\_toggle) | Determines whether Karpenter is enabled for the EKS cluster. Karpenter is an open-source auto-scaler for Kubernetes clusters. | `bool` | `true` | no |
+| <a name="input_keda_toggle"></a> [keda\_toggle](#input\_keda\_toggle) | Activates the installation of KEDA (Kubernetes Event-Driven Autoscaling), which adds event-driven scaling capabilities to Kubernetes workloads. | `bool` | `true` | no |
+| <a name="input_kiali_virtual_service_host"></a> [kiali\_virtual\_service\_host](#input\_kiali\_virtual\_service\_host) | The hostname for the Kiali virtual service, a part of Istio's service mesh visualization. It provides insights into the mesh topology and performance. | `string` | `"kiali.k8s.raj.ninja"` | no |
+| <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | Determines if termination protection is enabled for the Network Load Balancer, preventing accidental deletion. | `bool` | `false` | no |
+| <a name="input_nlb_ingress_internal"></a> [nlb\_ingress\_internal](#input\_nlb\_ingress\_internal) | Indicates whether the Network Load Balancer (NLB) for the EKS cluster should be internal, restricting access to within the AWS network. | `bool` | `false` | no |
+| <a name="input_nlb_ingress_type"></a> [nlb\_ingress\_type](#input\_nlb\_ingress\_type) | Specifies the type of ingress to be used, such as 'network', determining how the NLB handles incoming traffic to the EKS cluster. | `string` | `"network"` | no |
+| <a name="input_node_termination_handler_toggle"></a> [node\_termination\_handler\_toggle](#input\_node\_termination\_handler\_toggle) | Enables the AWS Node Termination Handler, which ensures that Kubernetes workloads are gracefully handled during EC2 instance terminations or disruptions. | `bool` | `true` | no |
+| <a name="input_nodes_instances_sizes"></a> [nodes\_instances\_sizes](#input\_nodes\_instances\_sizes) | A list of EC2 instance types to use for the EKS worker nodes. These instance types should balance between cost, performance, and resource requirements for your workload. | `list` | <pre>[<br>  "t3.large"<br>]</pre> | no |
+| <a name="input_proxy_protocol_v2"></a> [proxy\_protocol\_v2](#input\_proxy\_protocol\_v2) | Enables or disables Proxy Protocol v2 on the Network Load Balancer, used for preserving client IP addresses and other connection information. | `bool` | `false` | no |
 
 ## Outputs
 
@@ -248,7 +251,7 @@ No modules.
 ## Install
 
 ```sh
-terraform init
+terraform apply
 ```
 
 ## Usage
