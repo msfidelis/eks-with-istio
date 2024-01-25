@@ -5,6 +5,9 @@ resource "helm_release" "argo_rollouts" {
   chart            = "argo-rollouts"
   repository       = "https://argoproj.github.io/argo-helm"
   namespace        = "argo-rollouts"
+
+  version          = "2.34.1"
+
   create_namespace = true
 
   set {
