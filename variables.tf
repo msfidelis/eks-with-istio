@@ -4,17 +4,17 @@
 
 variable "cluster_name" {
   description = "The name of the Amazon EKS cluster. This is a unique identifier for your EKS cluster within the AWS region."
-  default = "eks-cluster"
+  default     = "eks-cluster"
 }
 
 variable "aws_region" {
   description = "AWS region where the EKS cluster will be deployed. This should be set to the region where you want your Kubernetes resources to reside."
-  default = "us-east-1"
+  default     = "us-east-1"
 }
 
 variable "k8s_version" {
   description = "The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components."
-  default = "1.29"
+  default     = "1.29"
 }
 
 #########################
@@ -96,33 +96,33 @@ variable "karpenter_availability_zones" {
 #########################
 
 variable "nlb_ingress_internal" {
-  type    = bool
+  type        = bool
   description = "Indicates whether the Network Load Balancer (NLB) for the EKS cluster should be internal, restricting access to within the AWS network."
-  default = false
+  default     = false
 }
 
 variable "nlb_ingress_type" {
-  type    = string
+  type        = string
   description = "Specifies the type of ingress to be used, such as 'network', determining how the NLB handles incoming traffic to the EKS cluster."
-  default = "network"
+  default     = "network"
 }
 
 variable "proxy_protocol_v2" {
-  type    = bool
+  type        = bool
   description = "Enables or disables Proxy Protocol v2 on the Network Load Balancer, used for preserving client IP addresses and other connection information."
-  default = false
+  default     = false
 }
 
 variable "nlb_ingress_enable_termination_protection" {
-  type    = bool
+  type        = bool
   description = "Determines if termination protection is enabled for the Network Load Balancer, preventing accidental deletion."
-  default = false
+  default     = false
 }
 
 variable "enable_cross_zone_load_balancing" {
-  type    = bool
+  type        = bool
   description = "Controls whether cross-zone load balancing is enabled for the Network Load Balancer, allowing even traffic distribution across all zones."
-  default = false
+  default     = false
 }
 
 
@@ -131,9 +131,9 @@ variable "enable_cross_zone_load_balancing" {
 #########################
 
 variable "cluster_private_zone" {
-  type    = string
+  type        = string
   description = "The private DNS zone name for the EKS cluster in AWS Route53. This zone is used for internal DNS resolution within the cluster."
-  default = "k8s.cluster"
+  default     = "k8s.cluster"
 }
 
 #########################
