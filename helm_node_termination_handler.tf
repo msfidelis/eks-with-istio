@@ -52,7 +52,7 @@ resource "helm_release" "node_termination_handler" {
     value = true
   }
 
-    set {
+  set {
     name  = "checkTagBeforeDraining"
     value = false
   }
