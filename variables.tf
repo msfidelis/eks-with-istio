@@ -156,6 +156,12 @@ variable "istio_ingress_max_pods" {
 #  PROMETHEUS CONFIGS   #
 #########################
 
+variable "enable_prometheus_stack" {
+  type        = bool
+  description = ""
+  default     = false
+}
+
 variable "grafana_virtual_service_host" {
   type        = string
   description = "The hostname for the Grafana virtual service, used in Istio routing. This host is used to access Grafana dashboards for monitoring metrics."
@@ -172,6 +178,16 @@ variable "jaeger_virtual_service_host" {
   type        = string
   description = "The hostname for the Jaeger virtual service, used for tracing and monitoring microservices within the Istio service mesh."
   default     = "jaeger.k8s.raj.ninja"
+}
+
+#################################
+#  MANAGED PROMETHEUS CONFIGS   #
+#################################
+
+variable "enable_managed_prometheus" {
+  type        = bool
+  description = ""
+  default     = true
 }
 
 ###############################
