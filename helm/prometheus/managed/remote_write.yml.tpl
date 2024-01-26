@@ -13,9 +13,6 @@ prometheus:
     serviceMonitorSelector: {}
     serviceMonitorSelectorNilUsesHelmValues: false
 
-kubeStateMetrics:
-  enabled: false
-
 prometheusOperator:
   enabled: true
   namespaces: ''
