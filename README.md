@@ -40,7 +40,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | ~> 2.0 |
 | <a name="requirement_kubectl"></a> [kubectl](#requirement\_kubectl) | ~> 1.14 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.0 |
@@ -50,10 +50,10 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.67.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.11.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.33.0 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.12.1 |
 | <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | 1.14.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.23.0 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.25.2 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | 3.1.0 |
 
 ## Modules
@@ -75,6 +75,7 @@ No modules.
 | [aws_cloudwatch_event_target.node_termination_handler_scheduled_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.node_termination_handler_spot_termination](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.node_termination_handler_state_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_log_group.prometheus](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_log_group) | resource |
 | [aws_eip.vpc_iep](https://registry.terraform.io/providers/aws/latest/docs/resources/eip) | resource |
 | [aws_eks_addon.cni](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
 | [aws_eks_addon.coredns](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
@@ -82,6 +83,7 @@ No modules.
 | [aws_eks_addon.kubeproxy](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
 | [aws_eks_cluster.eks_cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_cluster) | resource |
 | [aws_eks_node_group.cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_node_group) | resource |
+| [aws_grafana_workspace.grafana](https://registry.terraform.io/providers/aws/latest/docs/resources/grafana_workspace) | resource |
 | [aws_iam_instance_profile.nodes](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_instance_profile) | resource |
 | [aws_iam_openid_connect_provider.eks](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_openid_connect_provider) | resource |
 | [aws_iam_policy.aws_load_balancer_controller_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
@@ -90,19 +92,23 @@ No modules.
 | [aws_iam_policy.csi_driver](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.karpenter_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.keda_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.managed_prometheus_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy_attachment.aws_load_balancer_controller_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.aws_node_termination_handler_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.cluster_autoscaler](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.csi_driver](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.karpenter_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.keda](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
+| [aws_iam_policy_attachment.managed_prometheus_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_role.alb_controller](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.aws_node_termination_handler_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.cluster_autoscaler_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.eks_cluster_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.eks_nodes_roles](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.grafana](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.karpenter_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.keda_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.managed_prometheus_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.cloudwatch](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.cni](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.ecr](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
@@ -120,6 +126,7 @@ No modules.
 | [aws_lb_target_group.http](https://registry.terraform.io/providers/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group.https](https://registry.terraform.io/providers/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_nat_gateway.nat](https://registry.terraform.io/providers/aws/latest/docs/resources/nat_gateway) | resource |
+| [aws_prometheus_workspace.main](https://registry.terraform.io/providers/aws/latest/docs/resources/prometheus_workspace) | resource |
 | [aws_route.nat_access](https://registry.terraform.io/providers/aws/latest/docs/resources/route) | resource |
 | [aws_route.public_internet_access](https://registry.terraform.io/providers/aws/latest/docs/resources/route) | resource |
 | [aws_route53_record.nlb](https://registry.terraform.io/providers/aws/latest/docs/resources/route53_record) | resource |
@@ -167,6 +174,7 @@ No modules.
 | [helm_release.keda](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.kiali-server](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.kube_state_metrics](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
+| [helm_release.managed_prometheus](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.metrics_server](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.node_termination_handler](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
 | [helm_release.prometheus](https://registry.terraform.io/providers/helm/latest/docs/resources/release) | resource |
@@ -198,6 +206,8 @@ No modules.
 | [aws_iam_policy_document.karpenter_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.keda_policy](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.keda_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.managed_prometheus_policy](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.managed_prometheus_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_ssm_parameter.eks](https://registry.terraform.io/providers/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [tls_certificate.eks](https://registry.terraform.io/providers/tls/latest/docs/data-sources/certificate) | data source |
 
@@ -220,6 +230,8 @@ No modules.
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | A map of default tags to apply to all resources. These tags can help with identifying and organizing resources within the AWS environment. | `map(string)` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
 | <a name="input_descheduler_toggle"></a> [descheduler\_toggle](#input\_descheduler\_toggle) | Controls the installation of the Descheduler, a tool to balance and optimize the distribution of Pods across the cluster for improved efficiency. | `bool` | `false` | no |
 | <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | Controls whether cross-zone load balancing is enabled for the Network Load Balancer, allowing even traffic distribution across all zones. | `bool` | `false` | no |
+| <a name="input_enable_managed_prometheus"></a> [enable\_managed\_prometheus](#input\_enable\_managed\_prometheus) | Determines if the managed Prometheus service should be enabled. Managed Prometheus provides a fully managed monitoring service compatible with Prometheus. | `bool` | `false` | no |
+| <a name="input_enable_prometheus_stack"></a> [enable\_prometheus\_stack](#input\_enable\_prometheus\_stack) | n/a | `bool` | `true` | no |
 | <a name="input_grafana_virtual_service_host"></a> [grafana\_virtual\_service\_host](#input\_grafana\_virtual\_service\_host) | The hostname for the Grafana virtual service, used in Istio routing. This host is used to access Grafana dashboards for monitoring metrics. | `string` | `"grafana.k8s.raj.ninja"` | no |
 | <a name="input_istio_ingress_max_pods"></a> [istio\_ingress\_max\_pods](#input\_istio\_ingress\_max\_pods) | The maximum number of pods to scale up for the Istio ingress gateway. This limits the resources used and manages the scaling behavior. | `number` | `9` | no |
 | <a name="input_istio_ingress_min_pods"></a> [istio\_ingress\_min\_pods](#input\_istio\_ingress\_min\_pods) | The minimum number of pods to maintain for the Istio ingress gateway. This ensures basic availability and load handling. | `number` | `3` | no |
@@ -232,6 +244,11 @@ No modules.
 | <a name="input_karpenter_toggle"></a> [karpenter\_toggle](#input\_karpenter\_toggle) | Determines whether Karpenter is enabled for the EKS cluster. Karpenter is an open-source auto-scaler for Kubernetes clusters. | `bool` | `true` | no |
 | <a name="input_keda_toggle"></a> [keda\_toggle](#input\_keda\_toggle) | Activates the installation of KEDA (Kubernetes Event-Driven Autoscaling), which adds event-driven scaling capabilities to Kubernetes workloads. | `bool` | `true` | no |
 | <a name="input_kiali_virtual_service_host"></a> [kiali\_virtual\_service\_host](#input\_kiali\_virtual\_service\_host) | The hostname for the Kiali virtual service, a part of Istio's service mesh visualization. It provides insights into the mesh topology and performance. | `string` | `"kiali.k8s.raj.ninja"` | no |
+| <a name="input_managed_grafana_authentication_providers"></a> [managed\_grafana\_authentication\_providers](#input\_managed\_grafana\_authentication\_providers) | A list of authentication providers for managed Grafana. For example, 'SAML' can be used for integrating with identity providers, ensuring secure and centralized user management. | `list(string)` | <pre>[<br>  "SAML"<br>]</pre> | no |
+| <a name="input_managed_grafana_datasources"></a> [managed\_grafana\_datasources](#input\_managed\_grafana\_datasources) | Specifies the data sources that managed Grafana can access. Includes options like 'CLOUDWATCH', 'PROMETHEUS', and 'XRAY', providing a wide range of data for comprehensive monitoring solutions. | `list(string)` | <pre>[<br>  "CLOUDWATCH",<br>  "PROMETHEUS",<br>  "XRAY"<br>]</pre> | no |
+| <a name="input_managed_grafana_notification_destinations"></a> [managed\_grafana\_notification\_destinations](#input\_managed\_grafana\_notification\_destinations) | Lists the notification channels supported by managed Grafana. For instance, 'SNS' allows Grafana to send alerts and notifications through AWS Simple Notification Service. | `list(string)` | <pre>[<br>  "SNS"<br>]</pre> | no |
+| <a name="input_managed_grafana_permission_type"></a> [managed\_grafana\_permission\_type](#input\_managed\_grafana\_permission\_type) | Defines the permission model for managed Grafana. 'SERVICE\_MANAGED' allows AWS to manage permissions, simplifying the setup and management of Grafana. | `string` | `"SERVICE_MANAGED"` | no |
+| <a name="input_managed_prometheus_access_type"></a> [managed\_prometheus\_access\_type](#input\_managed\_prometheus\_access\_type) | Specifies the access type for managed Prometheus. 'CURRENT\_ACCOUNT' limits access to the current AWS account, ensuring isolated and secure access to the monitoring data. | `string` | `"CURRENT_ACCOUNT"` | no |
 | <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | Determines if termination protection is enabled for the Network Load Balancer, preventing accidental deletion. | `bool` | `false` | no |
 | <a name="input_nlb_ingress_internal"></a> [nlb\_ingress\_internal](#input\_nlb\_ingress\_internal) | Indicates whether the Network Load Balancer (NLB) for the EKS cluster should be internal, restricting access to within the AWS network. | `bool` | `false` | no |
 | <a name="input_nlb_ingress_type"></a> [nlb\_ingress\_type](#input\_nlb\_ingress\_type) | Specifies the type of ingress to be used, such as 'network', determining how the NLB handles incoming traffic to the EKS cluster. | `string` | `"network"` | no |
