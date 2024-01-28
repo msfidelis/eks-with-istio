@@ -87,13 +87,44 @@ resource "helm_release" "managed_prometheus" {
 
   version = "45.8.0"
 
-  # set {
-  #   name  = "fullnameOverride"
-  #   value = "prometheus"
-  # }
+  set {
+    name  = "prometheus.serviceAccount.name"
+    value = "managed-prometheus"
+  }
+
+  set {
+    name  = "prometheus.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = aws_iam_role.managed_prometheus_role.arn
+  }
+
+  set {
+    name  = "prometheus.prometheusSpec.remoteWrite[0].url"
+    value = format("%sapi/v1/remote_write", aws_prometheus_workspace.main[0].prometheus_endpoint)
+  }
+
+  set {
+    name  = "prometheus.prometheusSpec.remoteWrite[0].sigv4.region"
+    value = var.aws_region
+  }
+
+  set {
+    name  = "prometheus.prometheusSpec.remoteWrite[0].queue_config.max_samples_per_send"
+    value = "1000"
+  }
+
+  set {
+    name  = "prometheus.prometheusSpec.remoteWrite[0].queue_config.max_shards"
+    value = "200"
+  }
+
+  set {
+    name  = "prometheus.prometheusSpec.remoteWrite[0].queue_config.capacity"
+    value = "2500"
+  }
+
 
   values = [
-    "${file("./helm/prometheus/values.yml")}"
+    "${file("./helm/prometheus/managed/values.yml")}"
   ]
 
 
