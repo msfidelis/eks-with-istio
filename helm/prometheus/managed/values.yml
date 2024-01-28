@@ -1,5 +1,4 @@
 prometheus:
-  prometheusSpec:
     # podMonitorNamespaceSelector:
     #   any: true
     podMonitorSelector: {}
@@ -14,6 +13,12 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
 
 kubeStateMetrics:
+  enabled: false
+
+grafana:
+  enabled: false
+
+alertmanager:
   enabled: false
 
 prometheusOperator:

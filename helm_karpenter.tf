@@ -31,6 +31,7 @@ resource "helm_release" "karpenter" {
   depends_on = [
     aws_eks_cluster.eks_cluster,
     kubernetes_config_map.aws-auth,
+    aws_eks_node_group.cluster
   ]
 
 }

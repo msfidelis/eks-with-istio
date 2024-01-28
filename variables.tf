@@ -156,6 +156,12 @@ variable "istio_ingress_max_pods" {
 #  PROMETHEUS CONFIGS   #
 #########################
 
+variable "enable_prometheus_stack" {
+  type        = bool
+  description = ""
+  default     = true
+}
+
 variable "grafana_virtual_service_host" {
   type        = string
   description = "The hostname for the Grafana virtual service, used in Istio routing. This host is used to access Grafana dashboards for monitoring metrics."
@@ -173,6 +179,47 @@ variable "jaeger_virtual_service_host" {
   description = "The hostname for the Jaeger virtual service, used for tracing and monitoring microservices within the Istio service mesh."
   default     = "jaeger.k8s.raj.ninja"
 }
+
+#################################
+#  MANAGED PROMETHEUS CONFIGS   #
+#################################
+
+variable "enable_managed_prometheus" {
+  type        = bool
+  description = "Determines if the managed Prometheus service should be enabled. Managed Prometheus provides a fully managed monitoring service compatible with Prometheus."
+  default     = false
+}
+
+variable "managed_prometheus_access_type" {
+  type        = string
+  description = "Specifies the access type for managed Prometheus. 'CURRENT_ACCOUNT' limits access to the current AWS account, ensuring isolated and secure access to the monitoring data."
+  default     = "CURRENT_ACCOUNT"
+}
+
+variable "managed_grafana_permission_type" {
+  type        = string
+  description = "Defines the permission model for managed Grafana. 'SERVICE_MANAGED' allows AWS to manage permissions, simplifying the setup and management of Grafana."
+  default     = "SERVICE_MANAGED"
+}
+
+variable "managed_grafana_authentication_providers" {
+  type        = list(string)
+  description = "A list of authentication providers for managed Grafana. For example, 'SAML' can be used for integrating with identity providers, ensuring secure and centralized user management."
+  default     = ["SAML"]
+}
+
+variable "managed_grafana_datasources" {
+  type        = list(string)
+  description = "Specifies the data sources that managed Grafana can access. Includes options like 'CLOUDWATCH', 'PROMETHEUS', and 'XRAY', providing a wide range of data for comprehensive monitoring solutions."
+  default     = ["CLOUDWATCH", "PROMETHEUS", "XRAY"]
+}
+
+variable "managed_grafana_notification_destinations" {
+  type        = list(string)
+  description = "Lists the notification channels supported by managed Grafana. For instance, 'SNS' allows Grafana to send alerts and notifications through AWS Simple Notification Service."
+  default     = ["SNS"]
+}
+
 
 ###############################
 ###  ARGO-ROLLOUTS CONFIGS  ###
