@@ -19,7 +19,7 @@ resource "aws_eks_addon" "coredns" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
-    aws_eks_node_group.cluster,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth
   ]
 }
@@ -44,7 +44,7 @@ resource "aws_eks_addon" "csi_driver" {
   resolve_conflicts = "OVERWRITE"
 
   depends_on = [
-    aws_eks_node_group.cluster,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth
   ]
 

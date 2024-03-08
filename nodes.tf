@@ -1,4 +1,4 @@
-resource "aws_eks_node_group" "cluster" {
+resource "aws_eks_node_group" "main" {
 
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = format("%s-node-group", aws_eks_cluster.main.name)

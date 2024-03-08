@@ -10,7 +10,7 @@ resource "helm_release" "jaeger" {
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.cluster,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth
   ]
 }
@@ -36,7 +36,7 @@ YAML
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.cluster,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
     helm_release.istiod,
@@ -70,7 +70,7 @@ YAML
 
   depends_on = [
     aws_eks_cluster.main,
-    aws_eks_node_group.cluster,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
     helm_release.istiod,
