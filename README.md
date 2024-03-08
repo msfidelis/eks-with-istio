@@ -81,7 +81,7 @@ No modules.
 | [aws_eks_addon.coredns](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
 | [aws_eks_addon.csi_driver](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
 | [aws_eks_addon.kubeproxy](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_addon) | resource |
-| [aws_eks_cluster.eks_cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_cluster) | resource |
+| [aws_eks_cluster.main](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_cluster) | resource |
 | [aws_eks_node_group.cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/eks_node_group) | resource |
 | [aws_grafana_workspace.grafana](https://registry.terraform.io/providers/aws/latest/docs/resources/grafana_workspace) | resource |
 | [aws_iam_instance_profile.nodes](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_instance_profile) | resource |
@@ -103,7 +103,7 @@ No modules.
 | [aws_iam_role.alb_controller](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.aws_node_termination_handler_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.cluster_autoscaler_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role.eks_cluster_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.main_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.eks_nodes_roles](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.grafana](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.karpenter_role](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_role) | resource |
@@ -200,7 +200,7 @@ No modules.
 | [aws_iam_policy_document.cluster_autoscaler_policy](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.cluster_autoscaler_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.csi_driver](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.eks_cluster_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.main_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.eks_nodes_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.karpenter_policy](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.karpenter_role](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_policy_document) | data source |

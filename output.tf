@@ -3,5 +3,5 @@ output "istio_ingress_vpclink" {
 }
 
 output "cluster_name" {
-  value = aws_eks_cluster.eks_cluster.name
+  value = aws_eks_cluster.main.name
 }

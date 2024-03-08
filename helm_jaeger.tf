@@ -9,7 +9,7 @@ resource "helm_release" "jaeger" {
   create_namespace = true
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth
   ]
@@ -35,7 +35,7 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -69,7 +69,7 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,

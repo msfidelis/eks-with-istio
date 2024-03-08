@@ -20,7 +20,7 @@ resource "helm_release" "karpenter" {
 
   set {
     name  = "clusterEndpoint"
-    value = aws_eks_cluster.eks_cluster.endpoint
+    value = aws_eks_cluster.main.endpoint
   }
 
   set {
@@ -29,7 +29,7 @@ resource "helm_release" "karpenter" {
   }
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     kubernetes_config_map.aws-auth,
     aws_eks_node_group.cluster
   ]
@@ -78,7 +78,7 @@ resource "aws_launch_template" "karpenter" {
   update_default_version = true
 
   vpc_security_group_ids = [
-    aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
+    aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   ]
 
   user_data = base64encode(templatefile(
@@ -86,8 +86,8 @@ resource "aws_launch_template" "karpenter" {
     {
       CLUSTER_NAME       = var.cluster_name,
       CLUSTER_ID         = var.cluster_name,
-      APISERVER_ENDPOINT = aws_eks_cluster.eks_cluster.endpoint,
-      B64_CLUSTER_CA     = aws_eks_cluster.eks_cluster.certificate_authority.0.data
+      APISERVER_ENDPOINT = aws_eks_cluster.main.endpoint,
+      B64_CLUSTER_CA     = aws_eks_cluster.main.certificate_authority.0.data
     }
   ))
 

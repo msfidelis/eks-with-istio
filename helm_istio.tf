@@ -9,7 +9,7 @@ resource "helm_release" "istio_base" {
   version = "1.20.2"
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.alb_ingress_controller
@@ -27,7 +27,7 @@ resource "helm_release" "istiod" {
   version = "1.20.2"
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base
@@ -136,7 +136,7 @@ resource "helm_release" "istio_ingress" {
   }
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -161,7 +161,7 @@ YAML
 
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -185,7 +185,7 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -245,7 +245,7 @@ resource "helm_release" "kiali-server" {
 
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -273,7 +273,7 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
@@ -306,7 +306,7 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
+    aws_eks_cluster.main,
     aws_eks_node_group.cluster,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
