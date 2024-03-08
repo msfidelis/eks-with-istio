@@ -22,8 +22,8 @@ resource "helm_release" "prometheus" {
 
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
-    aws_eks_node_group.cluster,
+    aws_eks_cluster.main,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth
   ]
 }
@@ -52,8 +52,8 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
-    aws_eks_node_group.cluster,
+    aws_eks_cluster.main,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
     helm_release.prometheus
@@ -88,8 +88,8 @@ spec:
 YAML
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
-    aws_eks_node_group.cluster,
+    aws_eks_cluster.main,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth,
     helm_release.istio_base,
     helm_release.prometheus

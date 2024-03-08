@@ -1,5 +1,5 @@
 
-resource "aws_eks_cluster" "eks_cluster" {
+resource "aws_eks_cluster" "main" {
 
   name     = var.cluster_name
   version  = var.k8s_version
@@ -74,7 +74,7 @@ resource "aws_security_group_rule" "nodeport_cluster" {
   description = "nodeport"
   protocol    = "tcp"
 
-  security_group_id = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
+  security_group_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   type              = "ingress"
 }
 
@@ -85,6 +85,6 @@ resource "aws_security_group_rule" "nodeport_cluster_udp" {
   description = "nodeport"
   protocol    = "udp"
 
-  security_group_id = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
+  security_group_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   type              = "ingress"
 }

@@ -15,8 +15,8 @@ resource "helm_release" "keda" {
   }
 
   depends_on = [
-    aws_eks_cluster.eks_cluster,
-    aws_eks_node_group.cluster,
+    aws_eks_cluster.main,
+    aws_eks_node_group.main,
     kubernetes_config_map.aws-auth
   ]
 }
