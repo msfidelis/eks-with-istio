@@ -14,7 +14,7 @@ variable "aws_region" {
 
 variable "k8s_version" {
   description = "The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components."
-  default     = "1.29"
+  default     = "1.30"
 }
 
 #########################
@@ -125,6 +125,11 @@ variable "enable_cross_zone_load_balancing" {
   default     = false
 }
 
+variable "enable_vpc_link" {
+  type        = bool
+  description = "Create VPC Link associated to Network Load Balancing"
+  default     = true
+}
 
 #########################
 ###  ROUTE53 CONFIGS  ###
