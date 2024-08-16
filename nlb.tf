@@ -58,7 +58,12 @@ resource "aws_lb_listener" "ingress_80" {
 }
 
 resource "aws_api_gateway_vpc_link" "nlb" {
+
+  count = var.enable_vpc_link ? 1 : 0
+
   name        = var.cluster_name
   description = var.cluster_name
-  target_arns = [aws_lb.ingress.arn]
+  target_arns = [
+    aws_lb.ingress.arn
+  ]
 }

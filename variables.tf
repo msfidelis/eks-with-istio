@@ -14,7 +14,7 @@ variable "aws_region" {
 
 variable "k8s_version" {
   description = "The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components."
-  default     = "1.29"
+  default     = "1.30"
 }
 
 #########################
@@ -125,6 +125,11 @@ variable "enable_cross_zone_load_balancing" {
   default     = false
 }
 
+variable "enable_vpc_link" {
+  type        = bool
+  description = "Create VPC Link associated to Network Load Balancing"
+  default     = true
+}
 
 #########################
 ###  ROUTE53 CONFIGS  ###
@@ -272,19 +277,19 @@ variable "keda_toggle" {
 variable "addon_cni_version" {
   type        = string
   description = "Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking."
-  default     = "v1.14.1-eksbuild.1"
+  default     = "v1.18.3-eksbuild.1"
 }
 
 variable "addon_coredns_version" {
   type        = string
   description = "Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution."
-  default     = "v1.11.1-eksbuild.4"
+  default     = "v1.11.1-eksbuild.9"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers."
-  default     = "v1.29.0-eksbuild.1"
+  default     = "v1.30.0-eksbuild.3"
 }
 
 variable "addon_csi_version" {
