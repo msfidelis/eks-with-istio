@@ -4,9 +4,9 @@ resource "helm_release" "karpenter" {
   create_namespace = true
 
   name       = "karpenter"
-  repository = "https://charts.karpenter.sh"
+  repository = "oci://public.ecr.aws/karpenter"
   chart      = "karpenter"
-  version    = "v0.15.0"
+  version    = "1.0.5"
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
@@ -14,12 +14,12 @@ resource "helm_release" "karpenter" {
   }
 
   set {
-    name  = "clusterName"
+    name  = "settings.clusterName"
     value = var.cluster_name
   }
 
   set {
-    name  = "clusterEndpoint"
+    name  = "settings.clusterEndpoint"
     value = aws_eks_cluster.main.endpoint
   }
 
@@ -36,10 +36,10 @@ resource "helm_release" "karpenter" {
 
 }
 
-resource "kubectl_manifest" "karpenter_provisioner" {
+resource "kubectl_manifest" "karpenter_node_pool" {
   count = var.karpenter_toggle ? 1 : 0
   yaml_body = templatefile(
-    "${path.module}/helm/karpenter/templates/provisioner.yml.tpl", {
+    "${path.module}/helm/karpenter/templates/node-pool.yaml.tpl", {
       EKS_CLUSTER        = var.cluster_name,
       CAPACITY_TYPE      = var.karpenter_capacity_type
       INSTANCE_FAMILY    = var.karpenter_instance_family
@@ -52,16 +52,24 @@ resource "kubectl_manifest" "karpenter_provisioner" {
   ]
 }
 
-resource "kubectl_manifest" "karpenter_template" {
+resource "kubectl_manifest" "karpenter_node_class" {
   count = var.karpenter_toggle ? 1 : 0
   yaml_body = templatefile(
-    "${path.module}/helm/karpenter/templates/template.yml.tpl", {
-      EKS_CLUSTER = var.cluster_name,
-      EKS_SUBNETS = join(", ", [
+    "${path.module}/helm/karpenter/templates/node-class.yaml.tpl", {
+      EKS_CLUSTER = var.cluster_name
+      AMI_FAMILY = var.karpenter_ec2_node_family
+      SECURITY_GROUPS = [
+        aws_security_group.cluster_sg.id,
+        aws_security_group.cluster_nodes_sg.id,
+        aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
+      ]
+      INSTANCE_PROFILE = aws_iam_instance_profile.nodes.name
+      AMI_ID = data.aws_ssm_parameter.eks.value
+      EKS_SUBNETS = [
         aws_subnet.private_subnet_1a.id,
         aws_subnet.private_subnet_1b.id,
         aws_subnet.private_subnet_1c.id
-      ])
+      ]
       LAUNCH_TEMPLATE = format("%s-karpenter", var.cluster_name)
   })
 
