@@ -91,6 +91,10 @@ variable "karpenter_availability_zones" {
   ]
 }
 
+variable "karpenter_ec2_node_family" {
+  default = "Bottlerocket"
+}
+
 #########################
 ###  INGRESS CONFIGS  ###
 #########################
@@ -128,7 +132,7 @@ variable "enable_cross_zone_load_balancing" {
 variable "enable_vpc_link" {
   type        = bool
   description = "Create VPC Link associated to Network Load Balancing"
-  default     = true
+  default     = false
 }
 
 #########################
@@ -177,6 +181,12 @@ variable "kiali_virtual_service_host" {
   type        = string
   description = "The hostname for the Kiali virtual service, a part of Istio's service mesh visualization. It provides insights into the mesh topology and performance."
   default     = "kiali.k8s.raj.ninja"
+}
+
+variable "enable_jaeger" {
+  type = bool
+  description = "Flag to create jaeger standalone stack"
+  default = false
 }
 
 variable "jaeger_virtual_service_host" {
