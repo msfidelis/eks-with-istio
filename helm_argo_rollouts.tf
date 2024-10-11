@@ -20,20 +20,20 @@ resource "helm_release" "argo_rollouts" {
     value = true
   }
 
-  # set {
-  #     name = "podAnnotations.prometheus\\.io/scrape"
-  #     value = true
-  # }
+  set {
+      name = "podAnnotations.prometheus\\.io/scrape"
+      value = true
+  }
 
-  # set {
-  #     name = "podAnnotations.prometheus\\.io/path"
-  #     value = "/metrics"
-  # }
+  set {
+      name = "podAnnotations.prometheus\\.io/path"
+      value = "/metrics"
+  }
 
-  #     set {
-  #     name = "podAnnotations.prometheus\\.io/port"
-  #     value = "8090"
-  # }
+      set {
+      name = "podAnnotations.prometheus\\.io/port"
+      value = "8090"
+  }
 
 
   depends_on = [

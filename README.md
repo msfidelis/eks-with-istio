@@ -65,11 +65,21 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_api_gateway_vpc_link.nlb](https://registry.terraform.io/providers/aws/latest/docs/resources/api_gateway_vpc_link) | resource |
+| [aws_cloudwatch_event_rule.karpenter_termination_handler_instance_terminate](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_rule.karpenter_termination_handler_rebalance](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_rule.karpenter_termination_handler_scheduled_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_rule.karpenter_termination_handler_spot_termination](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_rule.karpenter_termination_handler_state_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_rule.node_termination_handler_instance_terminate](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_rule.node_termination_handler_rebalance](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_rule.node_termination_handler_scheduled_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_rule.node_termination_handler_spot_termination](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_rule.node_termination_handler_state_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
+| [aws_cloudwatch_event_target.karpenter_termination_handler_instance_terminate](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_event_target.karpenter_termination_handler_rebalance](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_event_target.karpenter_termination_handler_scheduled_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_event_target.karpenter_termination_handler_spot_termination](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
+| [aws_cloudwatch_event_target.karpenter_termination_handler_state_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.node_termination_handler_instance_terminate](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.node_termination_handler_rebalance](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_event_target.node_termination_handler_scheduled_change](https://registry.terraform.io/providers/aws/latest/docs/resources/cloudwatch_event_target) | resource |
@@ -148,7 +158,9 @@ No modules.
 | [aws_security_group_rule.nodeport](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.nodeport_cluster](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_security_group_rule.nodeport_cluster_udp](https://registry.terraform.io/providers/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_sqs_queue.karpenter_termination_handler](https://registry.terraform.io/providers/aws/latest/docs/resources/sqs_queue) | resource |
 | [aws_sqs_queue.node_termination_handler](https://registry.terraform.io/providers/aws/latest/docs/resources/sqs_queue) | resource |
+| [aws_sqs_queue_policy.karpenter_termination_handler](https://registry.terraform.io/providers/aws/latest/docs/resources/sqs_queue_policy) | resource |
 | [aws_sqs_queue_policy.node_termination_handler](https://registry.terraform.io/providers/aws/latest/docs/resources/sqs_queue_policy) | resource |
 | [aws_subnet.pods_subnet_1a](https://registry.terraform.io/providers/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.pods_subnet_1b](https://registry.terraform.io/providers/aws/latest/docs/resources/subnet) | resource |
@@ -184,8 +196,8 @@ No modules.
 | [kubectl_manifest.istio_target_group_binding_https](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.jaeger_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.jaeger_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
-| [kubectl_manifest.karpenter_provisioner](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
-| [kubectl_manifest.karpenter_template](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.karpenter_node_class](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
+| [kubectl_manifest.karpenter_node_pool](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.kiali_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.kiali_virtual_service](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.rollouts_gateway](https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/manifest) | resource |
@@ -215,13 +227,13 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_addon_cni_version"></a> [addon\_cni\_version](#input\_addon\_cni\_version) | Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking. | `string` | `"v1.18.3-eksbuild.1"` | no |
-| <a name="input_addon_coredns_version"></a> [addon\_coredns\_version](#input\_addon\_coredns\_version) | Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution. | `string` | `"v1.11.1-eksbuild.9"` | no |
-| <a name="input_addon_csi_version"></a> [addon\_csi\_version](#input\_addon\_csi\_version) | Indicates the version of the Container Storage Interface (CSI) driver to use for managing storage volumes in Kubernetes. | `string` | `"v1.26.1-eksbuild.1"` | no |
-| <a name="input_addon_kubeproxy_version"></a> [addon\_kubeproxy\_version](#input\_addon\_kubeproxy\_version) | Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers. | `string` | `"v1.30.0-eksbuild.3"` | no |
+| <a name="input_addon_cni_version"></a> [addon\_cni\_version](#input\_addon\_cni\_version) | Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking. | `string` | `"v1.18.3-eksbuild.2"` | no |
+| <a name="input_addon_coredns_version"></a> [addon\_coredns\_version](#input\_addon\_coredns\_version) | Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution. | `string` | `"v1.11.3-eksbuild.1"` | no |
+| <a name="input_addon_csi_version"></a> [addon\_csi\_version](#input\_addon\_csi\_version) | Indicates the version of the Container Storage Interface (CSI) driver to use for managing storage volumes in Kubernetes. | `string` | `"v1.35.0-eksbuild.1"` | no |
+| <a name="input_addon_kubeproxy_version"></a> [addon\_kubeproxy\_version](#input\_addon\_kubeproxy\_version) | Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers. | `string` | `"v1.31.0-eksbuild.5"` | no |
 | <a name="input_argo_rollouts_toggle"></a> [argo\_rollouts\_toggle](#input\_argo\_rollouts\_toggle) | Enables the installation of Argo Rollouts, providing advanced deployment strategies like Canary and Blue-Green deployments in Kubernetes. | `bool` | `true` | no |
 | <a name="input_argo_rollouts_virtual_service_host"></a> [argo\_rollouts\_virtual\_service\_host](#input\_argo\_rollouts\_virtual\_service\_host) | The hostname for the Argo Rollouts virtual service, used for advanced deployment capabilities like canary and blue-green deployments in Kubernetes. | `string` | `"argo-rollouts.k8s.raj.ninja"` | no |
-| <a name="input_auto_scale_options"></a> [auto\_scale\_options](#input\_auto\_scale\_options) | Configuration for the EKS cluster auto-scaling. It includes the minimum (min), maximum (max), and desired (desired) number of worker nodes. | `map` | <pre>{<br>  "desired": 6,<br>  "max": 10,<br>  "min": 4<br>}</pre> | no |
+| <a name="input_auto_scale_options"></a> [auto\_scale\_options](#input\_auto\_scale\_options) | Configuration for the EKS cluster auto-scaling. It includes the minimum (min), maximum (max), and desired (desired) number of worker nodes. | `map` | <pre>{<br>  "desired": 4,<br>  "max": 10,<br>  "min": 4<br>}</pre> | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region where the EKS cluster will be deployed. This should be set to the region where you want your Kubernetes resources to reside. | `string` | `"us-east-1"` | no |
 | <a name="input_chaos_mesh_toggle"></a> [chaos\_mesh\_toggle](#input\_chaos\_mesh\_toggle) | Determines whether to install Chaos Mesh, a cloud-native Chaos Engineering platform that orchestrates chaos experiments on Kubernetes environments. | `bool` | `false` | no |
 | <a name="input_cluster_autoscaler_toggle"></a> [cluster\_autoscaler\_toggle](#input\_cluster\_autoscaler\_toggle) | Enable or disable the Cluster Autoscaler installation. When true, Cluster Autoscaler is installed to automatically adjust the number of nodes in the cluster. | `bool` | `false` | no |
@@ -230,16 +242,18 @@ No modules.
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | A map of default tags to apply to all resources. These tags can help with identifying and organizing resources within the AWS environment. | `map(string)` | <pre>{<br>  "Environment": "prod",<br>  "Foo": "Bar",<br>  "Ping": "Pong"<br>}</pre> | no |
 | <a name="input_descheduler_toggle"></a> [descheduler\_toggle](#input\_descheduler\_toggle) | Controls the installation of the Descheduler, a tool to balance and optimize the distribution of Pods across the cluster for improved efficiency. | `bool` | `false` | no |
 | <a name="input_enable_cross_zone_load_balancing"></a> [enable\_cross\_zone\_load\_balancing](#input\_enable\_cross\_zone\_load\_balancing) | Controls whether cross-zone load balancing is enabled for the Network Load Balancer, allowing even traffic distribution across all zones. | `bool` | `false` | no |
+| <a name="input_enable_jaeger"></a> [enable\_jaeger](#input\_enable\_jaeger) | Flag to create jaeger standalone stack | `bool` | `false` | no |
 | <a name="input_enable_managed_prometheus"></a> [enable\_managed\_prometheus](#input\_enable\_managed\_prometheus) | Determines if the managed Prometheus service should be enabled. Managed Prometheus provides a fully managed monitoring service compatible with Prometheus. | `bool` | `false` | no |
 | <a name="input_enable_prometheus_stack"></a> [enable\_prometheus\_stack](#input\_enable\_prometheus\_stack) | n/a | `bool` | `true` | no |
-| <a name="input_enable_vpc_link"></a> [enable\_vpc\_link](#input\_enable\_vpc\_link) | Create VPC Link associated to Network Load Balancing | `bool` | `true` | no |
+| <a name="input_enable_vpc_link"></a> [enable\_vpc\_link](#input\_enable\_vpc\_link) | Create VPC Link associated to Network Load Balancing | `bool` | `false` | no |
 | <a name="input_grafana_virtual_service_host"></a> [grafana\_virtual\_service\_host](#input\_grafana\_virtual\_service\_host) | The hostname for the Grafana virtual service, used in Istio routing. This host is used to access Grafana dashboards for monitoring metrics. | `string` | `"grafana.k8s.raj.ninja"` | no |
 | <a name="input_istio_ingress_max_pods"></a> [istio\_ingress\_max\_pods](#input\_istio\_ingress\_max\_pods) | The maximum number of pods to scale up for the Istio ingress gateway. This limits the resources used and manages the scaling behavior. | `number` | `9` | no |
 | <a name="input_istio_ingress_min_pods"></a> [istio\_ingress\_min\_pods](#input\_istio\_ingress\_min\_pods) | The minimum number of pods to maintain for the Istio ingress gateway. This ensures basic availability and load handling. | `number` | `3` | no |
 | <a name="input_jaeger_virtual_service_host"></a> [jaeger\_virtual\_service\_host](#input\_jaeger\_virtual\_service\_host) | The hostname for the Jaeger virtual service, used for tracing and monitoring microservices within the Istio service mesh. | `string` | `"jaeger.k8s.raj.ninja"` | no |
-| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components. | `string` | `"1.30"` | no |
+| <a name="input_k8s_version"></a> [k8s\_version](#input\_k8s\_version) | The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components. | `string` | `"1.31"` | no |
 | <a name="input_karpenter_availability_zones"></a> [karpenter\_availability\_zones](#input\_karpenter\_availability\_zones) | A list of AWS availability zones where Karpenter should launch nodes. These zones should be in the same region as the EKS cluster. | `list(any)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
 | <a name="input_karpenter_capacity_type"></a> [karpenter\_capacity\_type](#input\_karpenter\_capacity\_type) | Defines the capacity types for provisioning instances in the cluster, such as 'spot' or 'on\_demand', offering cost-saving options or consistent availability respectively. | `list(any)` | <pre>[<br>  "spot"<br>]</pre> | no |
+| <a name="input_karpenter_ec2_node_family"></a> [karpenter\_ec2\_node\_family](#input\_karpenter\_ec2\_node\_family) | n/a | `string` | `"Bottlerocket"` | no |
 | <a name="input_karpenter_instance_family"></a> [karpenter\_instance\_family](#input\_karpenter\_instance\_family) | Defines a list of EC2 instance families to be considered by Karpenter for node provisioning. Instance families like 'c6' and 'c5' offer different compute capabilities. | `list(any)` | <pre>[<br>  "c6",<br>  "c6a",<br>  "c5"<br>]</pre> | no |
 | <a name="input_karpenter_instance_sizes"></a> [karpenter\_instance\_sizes](#input\_karpenter\_instance\_sizes) | Specifies a list of instance sizes within the chosen instance families to allow diversity in the provisioned nodes by Karpenter. | `list(any)` | <pre>[<br>  "large",<br>  "2xlarge"<br>]</pre> | no |
 | <a name="input_karpenter_toggle"></a> [karpenter\_toggle](#input\_karpenter\_toggle) | Determines whether Karpenter is enabled for the EKS cluster. Karpenter is an open-source auto-scaler for Kubernetes clusters. | `bool` | `true` | no |
@@ -253,7 +267,7 @@ No modules.
 | <a name="input_nlb_ingress_enable_termination_protection"></a> [nlb\_ingress\_enable\_termination\_protection](#input\_nlb\_ingress\_enable\_termination\_protection) | Determines if termination protection is enabled for the Network Load Balancer, preventing accidental deletion. | `bool` | `false` | no |
 | <a name="input_nlb_ingress_internal"></a> [nlb\_ingress\_internal](#input\_nlb\_ingress\_internal) | Indicates whether the Network Load Balancer (NLB) for the EKS cluster should be internal, restricting access to within the AWS network. | `bool` | `false` | no |
 | <a name="input_nlb_ingress_type"></a> [nlb\_ingress\_type](#input\_nlb\_ingress\_type) | Specifies the type of ingress to be used, such as 'network', determining how the NLB handles incoming traffic to the EKS cluster. | `string` | `"network"` | no |
-| <a name="input_node_termination_handler_toggle"></a> [node\_termination\_handler\_toggle](#input\_node\_termination\_handler\_toggle) | Enables the AWS Node Termination Handler, which ensures that Kubernetes workloads are gracefully handled during EC2 instance terminations or disruptions. | `bool` | `true` | no |
+| <a name="input_node_termination_handler_toggle"></a> [node\_termination\_handler\_toggle](#input\_node\_termination\_handler\_toggle) | Enables the AWS Node Termination Handler, which ensures that Kubernetes workloads are gracefully handled during EC2 instance terminations or disruptions. | `bool` | `false` | no |
 | <a name="input_nodes_instances_sizes"></a> [nodes\_instances\_sizes](#input\_nodes\_instances\_sizes) | A list of EC2 instance types to use for the EKS worker nodes. These instance types should balance between cost, performance, and resource requirements for your workload. | `list` | <pre>[<br>  "t3.large"<br>]</pre> | no |
 | <a name="input_proxy_protocol_v2"></a> [proxy\_protocol\_v2](#input\_proxy\_protocol\_v2) | Enables or disables Proxy Protocol v2 on the Network Load Balancer, used for preserving client IP addresses and other connection information. | `bool` | `false` | no |
 

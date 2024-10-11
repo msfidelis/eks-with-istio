@@ -49,7 +49,8 @@ data "aws_iam_policy_document" "karpenter_policy" {
       "ec2:TerminateInstances",
       "ec2:DeleteLaunchTemplate",
       "ssm:GetParameter",
-      "iam:PassRole"
+      "iam:PassRole",
+      "sqs:*"
     ]
 
     resources = [

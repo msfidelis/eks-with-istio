@@ -12,6 +12,11 @@ resource "kubernetes_config_map" "aws-auth" {
   - system:bootstrappers
   - system:nodes
   - system:node-proxier
+- username: system:anonymous
+  groups:
+  - system:bootstrappers
+  - system:nodes
+  - system:node-proxier
 YAML
   }
 
