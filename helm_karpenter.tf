@@ -24,6 +24,11 @@ resource "helm_release" "karpenter" {
   }
 
   set {
+    name  = "settings.interruptionQueue"
+    value = aws_sqs_queue.karpenter_termination_handler[count.index].name
+  }
+
+  set {
     name  = "aws.defaultInstanceProfile"
     value = aws_iam_instance_profile.nodes.name
   }
@@ -111,4 +116,148 @@ resource "aws_launch_template" "karpenter" {
       "aws-node-termination-handler/managed" = "true"
     }
   }
+}
+
+
+resource "aws_sqs_queue" "karpenter_termination_handler" {
+  count    = var.karpenter_toggle ? 1 : 0
+  name                       = format("%s-karpenter", var.cluster_name)
+  delay_seconds              = 0
+  max_message_size           = 2048
+  message_retention_seconds  = 86400
+  receive_wait_time_seconds  = 10
+  visibility_timeout_seconds = 60
+}
+
+resource "aws_sqs_queue_policy" "karpenter_termination_handler" {
+  count     = var.karpenter_toggle ? 1 : 0
+  queue_url = aws_sqs_queue.karpenter_termination_handler[count.index].id
+  policy    = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "sqs:SendMessage"
+      ],
+      "Resource": [
+        "${aws_sqs_queue.karpenter_termination_handler[count.index].arn}"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_cloudwatch_event_rule" "karpenter_termination_handler_instance_terminate" {
+  count       = var.karpenter_toggle ? 1 : 0
+  name        = format("%s-node-termination-handler-instance-terminate", var.cluster_name)
+  description = var.cluster_name
+
+  event_pattern = jsonencode({
+    source = ["aws.autoscaling"]
+    detail-type = [
+      "EC2 Instance-terminate Lifecycle Action"
+    ]
+  })
+}
+
+resource "aws_cloudwatch_event_target" "karpenter_termination_handler_instance_terminate" {
+  count     = var.karpenter_toggle ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.karpenter_termination_handler_instance_terminate[count.index].name
+  target_id = "SendToSQS"
+  arn       = aws_sqs_queue.karpenter_termination_handler[count.index].arn
+}
+
+
+resource "aws_cloudwatch_event_rule" "karpenter_termination_handler_scheduled_change" {
+  count       = var.karpenter_toggle ? 1 : 0
+  name        = format("%s-node-termination-handler-scheduled-change", var.cluster_name)
+  description = var.cluster_name
+
+  event_pattern = jsonencode({
+    source = ["aws.health"]
+    detail-type = [
+      "AWS Health Event"
+    ]
+    detail = {
+      service = [
+        "EC2"
+      ]
+      eventTypeCategory = [
+        "scheduledChange"
+      ]
+    }
+  })
+}
+
+resource "aws_cloudwatch_event_target" "karpenter_termination_handler_scheduled_change" {
+  count     = var.karpenter_toggle ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.karpenter_termination_handler_scheduled_change[count.index].name
+  target_id = "SendToSQS"
+  arn       = aws_sqs_queue.karpenter_termination_handler[count.index].arn
+}
+
+resource "aws_cloudwatch_event_rule" "karpenter_termination_handler_spot_termination" {
+  count       = var.karpenter_toggle ? 1 : 0
+  name        = format("%s-node-termination-handler-spot-termination", var.cluster_name)
+  description = var.cluster_name
+
+  event_pattern = jsonencode({
+    source = ["aws.ec2"]
+    detail-type = [
+      "EC2 Spot Instance Interruption Warning"
+    ]
+  })
+}
+
+resource "aws_cloudwatch_event_target" "karpenter_termination_handler_spot_termination" {
+  count     = var.karpenter_toggle ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.karpenter_termination_handler_spot_termination[count.index].name
+  target_id = "SendToSQS"
+  arn       = aws_sqs_queue.karpenter_termination_handler[count.index].arn
+}
+
+
+resource "aws_cloudwatch_event_rule" "karpenter_termination_handler_rebalance" {
+  count       = var.karpenter_toggle ? 1 : 0
+  name        = format("%s-node-termination-handler-rebalance", var.cluster_name)
+  description = var.cluster_name
+
+  event_pattern = jsonencode({
+    source = ["aws.ec2"]
+    detail-type = [
+      "EC2 Instance Rebalance Recommendation"
+    ]
+  })
+}
+
+resource "aws_cloudwatch_event_target" "karpenter_termination_handler_rebalance" {
+  count     = var.karpenter_toggle ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.karpenter_termination_handler_rebalance[count.index].name
+  target_id = "SendToSQS"
+  arn       = aws_sqs_queue.karpenter_termination_handler[count.index].arn
+}
+
+
+resource "aws_cloudwatch_event_rule" "karpenter_termination_handler_state_change" {
+  count       = var.karpenter_toggle ? 1 : 0
+  name        = format("%s-node-termination-handler-state-change", var.cluster_name)
+  description = var.cluster_name
+
+  event_pattern = jsonencode({
+    source = ["aws.ec2"]
+    detail-type = [
+      "EC2 Instance State-change Notification"
+    ]
+  })
+}
+
+resource "aws_cloudwatch_event_target" "karpenter_termination_handler_state_change" {
+  count     = var.karpenter_toggle ? 1 : 0
+  rule      = aws_cloudwatch_event_rule.karpenter_termination_handler_state_change[count.index].name
+  target_id = "SendToSQS"
+  arn       = aws_sqs_queue.karpenter_termination_handler[count.index].arn
 }

@@ -14,7 +14,7 @@ variable "aws_region" {
 
 variable "k8s_version" {
   description = "The version of Kubernetes to use for the EKS cluster. This version should be compatible with the AWS EKS service and other infrastructure components."
-  default     = "1.30"
+  default     = "1.31"
 }
 
 #########################
@@ -33,7 +33,7 @@ variable "auto_scale_options" {
   default = {
     min     = 4
     max     = 10
-    desired = 6
+    desired = 4
   }
 }
 
@@ -265,7 +265,7 @@ variable "chaos_mesh_toggle" {
 variable "node_termination_handler_toggle" {
   type        = bool
   description = "Enables the AWS Node Termination Handler, which ensures that Kubernetes workloads are gracefully handled during EC2 instance terminations or disruptions."
-  default     = true
+  default     = false
 }
 
 variable "argo_rollouts_toggle" {
@@ -287,25 +287,25 @@ variable "keda_toggle" {
 variable "addon_cni_version" {
   type        = string
   description = "Specifies the version of the AWS VPC CNI (Container Network Interface) plugin to use, which manages the network interfaces for pod networking."
-  default     = "v1.18.3-eksbuild.1"
+  default     = "v1.18.3-eksbuild.2"
 }
 
 variable "addon_coredns_version" {
   type        = string
   description = "Defines the version of CoreDNS to use, a DNS server/forwarder that is integral to internal Kubernetes DNS resolution."
-  default     = "v1.11.1-eksbuild.9"
+  default     = "v1.11.3-eksbuild.1"
 }
 
 variable "addon_kubeproxy_version" {
   type        = string
   description = "Sets the version of Kubeproxy to be used, which handles Kubernetes network services like forwarding the requests to correct containers."
-  default     = "v1.30.0-eksbuild.3"
+  default     = "v1.31.0-eksbuild.5"
 }
 
 variable "addon_csi_version" {
   type        = string
   description = "Indicates the version of the Container Storage Interface (CSI) driver to use for managing storage volumes in Kubernetes."
-  default     = "v1.26.1-eksbuild.1"
+  default     = "v1.35.0-eksbuild.1"
 }
 
 variable "default_tags" {
