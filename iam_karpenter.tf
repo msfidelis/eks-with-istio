@@ -39,12 +39,15 @@ data "aws_iam_policy_document" "karpenter_policy" {
       "ec2:DescribeInstances",
       "ec2:DescribeSecurityGroups",
       "ec2:DescribeSubnets",
+      "ec2:DescribeImages",
       "ec2:DescribeInstanceTypes",
       "ec2:DescribeInstanceTypeOfferings",
       "ec2:DescribeAvailabilityZones",
       "ec2:DescribeSpotPriceHistory",
       "pricing:GetProducts",
       "ec2:RunInstances",
+      "ec2:TerminateInstances",
+      "ec2:DeleteLaunchTemplate",
       "ssm:GetParameter",
       "iam:PassRole"
     ]
@@ -55,19 +58,6 @@ data "aws_iam_policy_document" "karpenter_policy" {
 
   }
 
-  statement {
-
-    effect = "Allow"
-    actions = [
-      "ec2:TerminateInstances",
-      "ec2:DeleteLaunchTemplate",
-    ]
-
-    resources = [
-      "*"
-    ]
-
-  }
 
 }
 

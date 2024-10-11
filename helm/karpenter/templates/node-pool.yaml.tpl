@@ -3,7 +3,6 @@ kind: NodePool
 metadata:
   name: ${EKS_CLUSTER}-nodepool
 spec:
-  ttlSecondsAfterEmpty: 30
   disruption:
     consolidationPolicy: WhenEmptyOrUnderutilized
     consolidateAfter: Never
@@ -53,4 +52,4 @@ spec:
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
-        name: ${EKS_CLUSTER}
+        name: ${EKS_CLUSTER}-nodeclass
