@@ -269,6 +269,12 @@ variable "argo_rollouts_virtual_service_host" {
   default     = "argo-rollouts.k8s.raj.ninja"
 }
 
+variable "argo_rollouts_expose_dashboard" {
+  type        = bool
+  description = "Enable expose Argo Rollouts Dashboards"
+  default     = false
+}
+
 #########################
 ###  GENERAL TOGGLES  ###
 #########################

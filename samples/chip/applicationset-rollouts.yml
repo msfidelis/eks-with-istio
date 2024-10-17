@@ -33,24 +33,24 @@ spec:
                   cpu: 200m
                   memory: 256Mi
                 autoscaling: {}
-                min: 1
+                min: 10
                 max: 10
               rollout:
                 strategy:
                   canary:
                     steps:
-                    # - setWeight: 20
-                    # - pause: { duration: 10 }
-                    # - setWeight: 40
-                    # - pause: { duration: 10 }
-                    # - setWeight: 60
-                    # - pause: { duration: 10 }
-                    # - setWeight: 80
-                    # - pause: { duration: 10 }
+                    - setWeight: 20
+                    - pause: { }
+                    - setWeight: 40
+                    - pause: { }
+                    - setWeight: 60
+                    - pause: { duration: 10 }
+                    - setWeight: 80
+                    - pause: { duration: 10 }
                     - setWeight: 100
               envs:
                 - name: VERSION
-                  value: "v1"
+                  value: "v6"
 
               port:
                 name: web
@@ -64,7 +64,7 @@ spec:
                   selector: ingressgateway
                   # HTTP, HTTP2, GRPC, GRPC-WEB, MONGO, REDIS, MYSQL, TCP
                   protocol: HTTP 
-                  port: 8080
+                  port: 80
                 host: chip.k8s.raj.ninja
                 virtualService:
                   http:
