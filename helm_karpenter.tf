@@ -62,14 +62,14 @@ resource "kubectl_manifest" "karpenter_node_class" {
   yaml_body = templatefile(
     "${path.module}/helm/karpenter/templates/node-class.yaml.tpl", {
       EKS_CLUSTER = var.cluster_name
-      AMI_FAMILY = var.karpenter_ec2_node_family
+      AMI_FAMILY  = var.karpenter_ec2_node_family
       SECURITY_GROUPS = [
         aws_security_group.cluster_sg.id,
         aws_security_group.cluster_nodes_sg.id,
         aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
       ]
       INSTANCE_PROFILE = aws_iam_instance_profile.nodes.name
-      AMI_ID = data.aws_ssm_parameter.eks.value
+      AMI_ID           = data.aws_ssm_parameter.eks.value
       EKS_SUBNETS = [
         aws_subnet.private_subnet_1a.id,
         aws_subnet.private_subnet_1b.id,
@@ -120,7 +120,7 @@ resource "aws_launch_template" "karpenter" {
 
 
 resource "aws_sqs_queue" "karpenter_termination_handler" {
-  count    = var.karpenter_toggle ? 1 : 0
+  count                      = var.karpenter_toggle ? 1 : 0
   name                       = format("%s-karpenter", var.cluster_name)
   delay_seconds              = 0
   max_message_size           = 2048

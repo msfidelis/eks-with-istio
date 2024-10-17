@@ -184,9 +184,9 @@ variable "kiali_virtual_service_host" {
 }
 
 variable "enable_jaeger" {
-  type = bool
+  type        = bool
   description = "Flag to create jaeger standalone stack"
-  default = false
+  default     = false
 }
 
 variable "jaeger_virtual_service_host" {
@@ -235,6 +235,29 @@ variable "managed_grafana_notification_destinations" {
   default     = ["SNS"]
 }
 
+
+###############################
+###  ARGO-CD CONFIGS  ###
+###############################
+
+variable "enable_argocd" {
+  type    = bool
+  default = true
+}
+
+variable "argocd_virtual_service_host" {
+  type    = string
+  default = "argo.k8s.raj.ninja"
+}
+
+###############################
+###  CHART MUSEUM CONFIGS   ###
+###############################
+
+variable "enable_chart_museum" {
+  type    = bool
+  default = true
+}
 
 ###############################
 ###  ARGO-ROLLOUTS CONFIGS  ###

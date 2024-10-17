@@ -45,7 +45,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: chip-gateway
+  name: chip
   namespace: chip
 spec:
   selector:
@@ -57,38 +57,17 @@ spec:
       protocol: HTTP
     hosts:
     - "chip.k8s.raj.ninja"
-    - "chip.chip.svc.cluster.local"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: chip-gateway
+  name: chip
   namespace: chip
 spec:
   hosts:
-  - "chip.chip.svc.cluster.local"
   - "chip.k8s.raj.ninja"
   gateways:
-  - chip-gateway
-  http:
-  - route:
-    - destination:
-        host: chip
-        port:
-          number: 8080
-    retries:
-      attempts: 1
-      perTryTimeout: 500ms
-      retryOn: refused-stream
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: chip-internal
-  namespace: chip
-spec:
-  hosts:
-  - "chip.chip.svc.cluster.local"
+  - chip
   http:
   - route:
     - destination:

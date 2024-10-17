@@ -21,18 +21,18 @@ resource "helm_release" "argo_rollouts" {
   }
 
   set {
-      name = "podAnnotations.prometheus\\.io/scrape"
-      value = true
+    name  = "podAnnotations.prometheus\\.io/scrape"
+    value = true
   }
 
   set {
-      name = "podAnnotations.prometheus\\.io/path"
-      value = "/metrics"
+    name  = "podAnnotations.prometheus\\.io/path"
+    value = "/metrics"
   }
 
-      set {
-      name = "podAnnotations.prometheus\\.io/port"
-      value = "8090"
+  set {
+    name  = "podAnnotations.prometheus\\.io/port"
+    value = "8090"
   }
 
 
