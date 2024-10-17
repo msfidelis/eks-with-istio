@@ -1,4 +1,5 @@
 resource "helm_release" "argo_rollouts" {
+  
   count = var.argo_rollouts_toggle ? 1 : 0
 
   name       = "argo-rollouts"
@@ -12,7 +13,7 @@ resource "helm_release" "argo_rollouts" {
 
   set {
     name  = "dashboard.enabled"
-    value = true
+    value = var.argo_rollouts_expose_dashboard
   }
 
   set {
@@ -21,18 +22,18 @@ resource "helm_release" "argo_rollouts" {
   }
 
   set {
-      name = "podAnnotations.prometheus\\.io/scrape"
-      value = true
+    name  = "podAnnotations.prometheus\\.io/scrape"
+    value = true
   }
 
   set {
-      name = "podAnnotations.prometheus\\.io/path"
-      value = "/metrics"
+    name  = "podAnnotations.prometheus\\.io/path"
+    value = "/metrics"
   }
 
-      set {
-      name = "podAnnotations.prometheus\\.io/port"
-      value = "8090"
+  set {
+    name  = "podAnnotations.prometheus\\.io/port"
+    value = "8090"
   }
 
 
@@ -44,6 +45,9 @@ resource "helm_release" "argo_rollouts" {
 }
 
 resource "kubectl_manifest" "rollouts_gateway" {
+
+  count = (var.argo_rollouts_toggle && var.argo_rollouts_expose_dashboard) ? 1 : 0
+
   yaml_body = <<YAML
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -74,6 +78,9 @@ YAML
 
 
 resource "kubectl_manifest" "rollouts_virtual_service" {
+
+  count = (var.argo_rollouts_toggle && var.argo_rollouts_expose_dashboard) ? 1 : 0
+
   yaml_body = <<YAML
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService

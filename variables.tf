@@ -184,9 +184,9 @@ variable "kiali_virtual_service_host" {
 }
 
 variable "enable_jaeger" {
-  type = bool
+  type        = bool
   description = "Flag to create jaeger standalone stack"
-  default = false
+  default     = false
 }
 
 variable "jaeger_virtual_service_host" {
@@ -237,6 +237,29 @@ variable "managed_grafana_notification_destinations" {
 
 
 ###############################
+###  ARGO-CD CONFIGS  ###
+###############################
+
+variable "enable_argocd" {
+  type    = bool
+  default = true
+}
+
+variable "argocd_virtual_service_host" {
+  type    = string
+  default = "argo.k8s.raj.ninja"
+}
+
+###############################
+###  CHART MUSEUM CONFIGS   ###
+###############################
+
+variable "enable_chart_museum" {
+  type    = bool
+  default = true
+}
+
+###############################
 ###  ARGO-ROLLOUTS CONFIGS  ###
 ###############################
 
@@ -244,6 +267,12 @@ variable "argo_rollouts_virtual_service_host" {
   type        = string
   description = "The hostname for the Argo Rollouts virtual service, used for advanced deployment capabilities like canary and blue-green deployments in Kubernetes."
   default     = "argo-rollouts.k8s.raj.ninja"
+}
+
+variable "argo_rollouts_expose_dashboard" {
+  type        = bool
+  description = "Enable expose Argo Rollouts Dashboards"
+  default     = false
 }
 
 #########################

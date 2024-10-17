@@ -1,0 +1,80 @@
+app:
+  name: nginx
+  image: nginx:latest
+  namespace: nginx
+  iam: ""
+  capacity:
+    requests: 
+      cpu: 100m
+      memory: 128Mi
+    limits: 
+      cpu: 200m
+      memory: 256Mi
+    autoscaling: {}
+    min: 1
+    max: 10
+  rollout:
+    strategy:
+      canary:
+        steps:
+        - setWeight: 20
+        - pause: { duration: 10 }
+        - setWeight: 40
+        - pause: { duration: 10 }
+        - setWeight: 60
+        - pause: { duration: 10 }
+        - setWeight: 80
+        - pause: { duration: 10 }
+        - setWeight: 100
+  envs:
+    - name: FOO
+      value: "bar"
+    - name: PING
+      value: "pong"
+
+  port:
+    name: web
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  service:
+    type: ClusterIP
+  istio:
+    gateway: 
+      selector: ingressgateway
+      # HTTP, HTTP2, GRPC, GRPC-WEB, MONGO, REDIS, MYSQL, TCP
+      protocol: HTTP 
+      port: 80
+    host: nginx.k8s.raj.ninja
+    virtualService:
+      http:
+        enabled: true
+        retries:
+          attempts: 1
+          perTryTimeout: 500ms
+          retryOn: refused-stream
+    DestinationRule:
+      enabled: true
+
+  prometheus:
+    scrape: "true"
+    port: 80
+    path: /metrics
+
+  probes:
+    livenessProbe:
+      enabled: true
+      failureThreshold: 10
+      periodSeconds: 10
+      httpGet:
+        path: /
+        port: 80
+    startupProbe:
+      enabled: true
+      failureThreshold: 10
+      periodSeconds: 10
+      httpGet:
+        path: /
+        port: 80
+
+kubernetesClusterDomain: cluster.local

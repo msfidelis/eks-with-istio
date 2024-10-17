@@ -1,0 +1,57 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Values.app.name }}
+  namespace: {{ .Values.app.namespace }}
+spec:
+  replicas: {{ .Values.app.capacity.min }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  strategy:
+  {{- toYaml .Values.app.rollout.strategy | nindent 4 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "{{ .Values.app.prometheus.port }}"
+        prometheus.io/path: "{{ .Values.app.prometheus.path }}"
+        prometheus.io/scrape: "{{ .Values.app.prometheus.scrape }}"
+      labels:
+        app: {{ .Values.app.name }}
+        name: {{ .Values.app.name }}
+        version: {{ .Values.app.version }}
+    spec:
+      serviceAccountName: build-robot
+      containers:
+      - name: {{ .Values.app.name }}
+        ports:
+        - containerPort: {{ .Values.app.port.targetPort }}
+          name: {{ .Values.app.port.name }}
+        env:
+          {{- toYaml .Values.app.envs | nindent 8 }}
+        image: {{ .Values.app.image }}
+        resources:
+          requests:
+            cpu: {{ .Values.app.capacity.requests.cpu }}
+            memory: {{ .Values.app.capacity.requests.memory }}
+          limits:
+            cpu: {{ .Values.app.capacity.limits.cpu }}
+            memory: {{ .Values.app.capacity.limits.memory }}
+        {{- if .Values.app.probes.livenessProbe.enabled }}          
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.app.probes.livenessProbe.httpGet.path }}
+            port: {{ .Values.app.probes.livenessProbe.httpGet.port }}
+          failureThreshold: {{ .Values.app.probes.livenessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.app.probes.livenessProbe.periodSeconds }}
+        {{- end }}
+        {{- if .Values.app.probes.startupProbe.enabled }}
+        startupProbe:
+          httpGet:
+            path: {{ .Values.app.probes.startupProbe.httpGet.path }}
+            port: {{ .Values.app.probes.startupProbe.httpGet.port }}
+          failureThreshold: {{ .Values.app.probes.startupProbe.failureThreshold }}
+          periodSeconds: {{ .Values.app.probes.startupProbe.periodSeconds }}
+        {{- end }}
