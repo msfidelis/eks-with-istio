@@ -23,7 +23,7 @@ spec:
         name: {{ .Values.app.name }}
         version: {{ .Values.app.version }}
     spec:
-      serviceAccountName: build-robot
+      serviceAccountName: {{ .Values.app.name }}
       containers:
       - name: {{ .Values.app.name }}
         ports:
