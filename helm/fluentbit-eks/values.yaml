@@ -1,0 +1,19 @@
+fluentbit:
+  image: fluent/fluent-bit:1.8
+  resources:
+    limits: 
+      cpu: 500m
+      memory: 256Mi 
+    requests:
+      cpu: 500m
+      memory: 100Mi
+
+serviceaccount:
+  eks_role: ""
+
+s3:
+  region: us-east-1
+  bucket_name: ""
+  match: "*"
+  total_file_size: 10M
+  upload_timeout: 1m
