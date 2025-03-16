@@ -7,7 +7,7 @@ resource "helm_release" "argo_rollouts" {
   repository = "https://argoproj.github.io/argo-helm"
   namespace  = "argo-rollouts"
 
-  version = "2.34.1"
+  version = "2.39.1"
 
   create_namespace = true
 
