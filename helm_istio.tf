@@ -6,7 +6,7 @@ resource "helm_release" "istio_base" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.20.2"
+  version = "1.25.0"
 
   depends_on = [
     aws_eks_cluster.main,
@@ -24,7 +24,7 @@ resource "helm_release" "istiod" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.20.2"
+  version = "1.25.0"
 
   depends_on = [
     aws_eks_cluster.main,
@@ -41,7 +41,7 @@ resource "helm_release" "istio_ingress" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.20.2"
+  version = "1.25.0"
 
   set {
     name  = "service.type"
@@ -201,7 +201,7 @@ resource "helm_release" "kiali-server" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.79.0"
+  version = "2.5"
 
   set {
     name  = "server.web_fqdn"
